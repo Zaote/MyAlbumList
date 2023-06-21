@@ -1,20 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Login from './src/views/Login';
+import SignUp from './src/views/SignUp';
+import AllAlbums from './src/views/AllAlbums';
+import ListenedAlbums from './src/views/ListenedAlbums';
+import ToBeListenedAlbums from './src/views/ToBeListenedAlbums';
+import RegisterAlbum from './src/views/RegisterAlbum';
+import Settings from './src/views/Settings';
+import AlbumInformation from './src/views/AlbumInformation';
+
+const MainStack = createNativeStackNavigator()
+const HomeTabs = createBottomTabNavigator()
+const ListDrawer = createDrawerNavigator()
+
+function Home({navigation}){
+  return (
+    <HomeTabs.Navigator initialRouteName="All Albums" screenOptions={{headerShown: false}}>
+      <HomeTabs.Screen name="Lists" component={Lists}/>
+      <HomeTabs.Screen name="Register New Album" component={RegisterAlbum}/>
+      <HomeTabs.Screen name="Settings" component={Settings}/>
+    </HomeTabs.Navigator>
+  )
+}
+
+function Lists({navigation}){
+  return (
+    <ListDrawer.Navigator initialRouteName="All Albums">
+      <ListDrawer.Screen name="All Albums" component={AllAlbums}/>
+      <ListDrawer.Screen name="Listened Albums" component={ListenedAlbums}/>
+      <ListDrawer.Screen name="To Be Listened Albums" component={ToBeListenedAlbums}/>
+    </ListDrawer.Navigator>
+  )
+}
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // <UserProvider>
+    <NavigationContainer>
+        <MainStack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+            <MainStack.Screen name="Login" component={Login}/>
+            <MainStack.Screen name="Sign Up" component={SignUp}/>
+            <MainStack.Screen name="Home" component={Home}/>
+            <MainStack.Screen name="Album Information" component={AlbumInformation}/>
+        </MainStack.Navigator>
+    </NavigationContainer>
+    // </UserProvider>    
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
