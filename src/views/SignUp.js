@@ -145,7 +145,7 @@ export default function SignUp({navigation}){
                     familyName: familyName,
                     email: email,
                     password: bcrypt.hashSync(password, salt),
-                    albumData: {}
+                    albumData: {albums: []}
                 }
             }
             dispatch({

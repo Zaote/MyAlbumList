@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
+import UsersContext from '../components/UserProvider'
 
 export default function AlbumList({navigation}) {
-
+    const { state, dispatch } = useContext(UsersContext);
     const [albumData, setAlbumData] = useState([])
     
     //Aqui temos 2 opções de gambiarra kkk, a primeira opção é deixar albumData dentro de useEffect como visto abaixo
@@ -24,18 +25,19 @@ export default function AlbumList({navigation}) {
         if (isFocused) {
           loadAlbumData();
         }
-      }, [isFocused]);
+    }, [isFocused]);
 
-    const loadAlbumData = async () => {
-        try {
-            const data = await AsyncStorage.getItem("albumData")
-            if (data !== null) {
-                setAlbumData(JSON.parse(data))
-                //console.log(data)
-            }
-        } catch (error) {
-            console.log("Error retrieving album data:", error)
-        }
+    const loadAlbumData = () => {
+        // try {
+            // const data = await AsyncStorage.getItem("albumData")
+            const allAlbums = state.context[state.loggedInUser].albumData.albums
+            // if (data !== null) {
+            //     setAlbumData(JSON.parse(data))
+            //     //console.log(data)
+            // }
+        // } catch (error) {
+        //     console.log("Error retrieving album data:", error)
+        // }
     }
 
     const renderItem = ({ item }) => (
@@ -54,7 +56,7 @@ export default function AlbumList({navigation}) {
         <View style = {appStyles.container}>
             <Text>All Albums</Text>
             <FlatList
-                data = {albumData}
+                data = {allAlbums}
                 renderItem = {renderItem}
                 keyExtractor = {(item, index) => `${item.name}_${index}`}
             />

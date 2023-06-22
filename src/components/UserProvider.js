@@ -51,6 +51,11 @@ const actions = {
         const loggedInUser = action.payload;
         return { ...state, loggedInUser };
     },
+    createAlbum: (state, action) => {
+        const album = action.payload.albums
+        const loggedInUser = action.payload.user
+        const updatedAlbuns = [...state.context[loggedInUser].albums, album];
+    },
     // updateMultipleUsers: (state, action) => {
     //     const updatedUsers = state.users.map(u => {
     //         const userUpdated = action.payload.find(usr => usr.id === u.id);
