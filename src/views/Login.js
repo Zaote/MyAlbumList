@@ -17,19 +17,21 @@ var salt = bcrypt.genSaltSync(10)
 
 export default function Login({ navigation }) {
   const { state, dispatch } = useContext(UsersContext);
-  const [userName, setUserName] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [msg, setMsg] = useState('');
 
-  function handleLogin(userName, password) {
-    if (!(userName in state.context)) {
-      setMsg(`The user ${userName} does not exist!`);
+  function handleLogin(username, password) {
+    if (!(username in state.context)) {
+      setMsg(`The user ${username} does not exist!`);
     } else {
       const isCorrectPassword = bcrypt.compareSync(
         password,
-        state.context[userName].password
+        state.context[username].password
       )
       if (isCorrectPassword) {
+        const loggedInUser = username;
+        dispatch({ type: 'loginUser', payload: loggedInUser });
         navigation.navigate('Home');
       } else {
         setMsg('The password is invalid!');
@@ -46,7 +48,7 @@ export default function Login({ navigation }) {
         <Input
           style={appStyles.input}
           placeholder='User'
-          onChangeText={val => setUserName(val)}
+          onChangeText={val => setUsername(val)}
         />
         <Input
           style={appStyles.input}
@@ -58,7 +60,7 @@ export default function Login({ navigation }) {
       <Button
         buttonStyle={{ width: 200 }}
         containerStyle={{ margin: 5 }}
-        onPress={() => handleLogin(userName, password)}
+        onPress={() => handleLogin(username, password)}
         title='Login'
       />
       <TouchableOpacity onPress={() => navigation.push('Sign Up')}>

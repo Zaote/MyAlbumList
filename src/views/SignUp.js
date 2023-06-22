@@ -1,19 +1,222 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import appStyles from '../appStyles';
-import { Button } from '@rneui/base';
+import { Input, Button } from '@rneui/base';
+import UsersContext from '../components/UserProvider';
+
+var bcrypt = require('bcryptjs');
+
+bcrypt.setRandomFallback((len) => {
+    const buf = new Uint8Array(len);
+    return buf.map(() => Math.floor(Math.random() * 256));
+});
+
+var salt = bcrypt.genSaltSync(10)
+
+function startsWithLetter(strg){
+    const charCode = strg.charCodeAt(0);
+    upper = charCode >= 65 && charCode <= 90
+    lower = charCode >= 97 && charCode <= 122
+    return upper || lower
+}
+
 
 export default function SignUp({navigation}){
+    const { state, dispatch } = useContext(UsersContext);
+
+
+    const [givenName, setGivenName] = useState("")
+    const [flagGivenName, setFlagGivenName] = useState(false)
+    const [errorGivenName, setErrorGivenName] = useState("")
+
+    const [familyName, setFamilyName] = useState("")
+    const [flagFamilyName, setFlagFamilyName] = useState(false)
+    const [errorFamilyName, setErrorFamilyName] = useState("")
+
+    const [username, setUsername] = useState("")
+    const [flagUsername, setFlagUsername] = useState(false)
+    const [errorUsername, setErrorUsername] = useState("")
+
+    const [email, setEmail] = useState("")
+    const [flagEmail, setFlagEmail] = useState(false)
+    const [errorEmail, setErrorEmail] = useState("")
+
+    const [password, setPassword] = useState("")
+    const [flagPassword, setFlagPassword] = useState(false)
+    const [errorPassword, setErrorPassword] = useState("")
+
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [flagConfirmPassword, setFlagConfirmPassword] = useState(false)
+    const [errorConfirmPassword, setErrorConfirmPassword] = useState("")
+    
+
+    function validateUsername(val){
+        setUsername(val)
+        const regex = /^[a-zA-Z][a-zA-Z0-9_]{2,17}$/
+        if(val.length < 3){
+            setErrorUsername("Too small. It should contain 3 or more characters!")
+            setFlagUsername(false)
+        }else if(val.length > 18){
+            setErrorUsername("Too big. It should contain less than 19 characters!")
+            setFlagUsername(false)
+        }else if(!startsWithLetter(val)){
+            setErrorUsername("It must start with a letter!")
+            setFlagUsername(false)
+        }
+        else if(regex.test(val)){
+            setErrorUsername("")
+            setFlagUsername(true)
+        }else{
+            setErrorUsername("It must only contain letters, digits and underscores!")
+            setFlagUsername(false)
+        }
+    }
+
+    function validateEmail(val){
+        setEmail(val)
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(regex.test(val)){
+            setErrorEmail("")
+            setFlagEmail(true)
+        }else{
+            setErrorEmail("This is not an email!")
+            setFlagEmail(false)
+        }
+    }
+
+    function validateGivenName(val){
+        setGivenName(val)
+        if(val.length > 0){
+            setFlagGivenName(true)
+        }else{
+            setFlagGivenName(false)
+        }
+    }
+
+    function validateFamilyName(val){
+        setFamilyName(val)
+        if(val.length > 0){
+            setFlagFamilyName(true)
+        }else{
+            setFlagFamilyName(false)
+        }
+    }
+
+    function validatePassword(val){
+        setPassword(val)
+        if(val.length < 8){
+            setErrorPassword("Too small. It should contain 8 or more characters!")
+            setFlagPassword(false)
+        }else if(val.length > 64){
+            setErrorPassword("Too big. It should contain less than 65 characters!")
+            setFlagPassword(false)
+        }else{
+            setErrorPassword("")
+            setFlagPassword(true)
+        }
+        if(val === confirmPassword){
+            setErrorConfirmPassword("")
+            setFlagConfirmPassword(true)
+        }else{
+            setErrorConfirmPassword("The passwords don't match!")
+            setFlagConfirmPassword(false)
+        }
+    }
+
+    function validateConfirmPassword(val){
+        setConfirmPassword(val)
+        if(val === password){
+            setErrorConfirmPassword("")
+            setFlagConfirmPassword(true)
+        }else{
+            setErrorConfirmPassword("The passwords don't match!")
+            setFlagConfirmPassword(false)
+        }
+    }
+
+    function handleSignUp(){
+        // console.warn(state.context)
+        const flagSignUp = flagGivenName&&flagFamilyName&&flagUsername&&flagEmail&&flagPassword&&flagPassword 
+        if(flagSignUp){
+            const newUser = {
+                [username]: {
+                    id: parseInt(Math.random() * 10e8),
+                    givenName: givenName,
+                    familyName: familyName,
+                    email: email,
+                    password: bcrypt.hashSync(password, salt),
+                    albumData: {}
+                }
+            }
+            dispatch({
+                type: 'createUser',
+                payload: newUser,
+            })
+            // navigation.navigate("Home")
+        }
+    }
+
+
     return (
         <View style={appStyles.container}>
             <Text>Sign Up</Text>
-            <Button
+            
+            {/* <Button
                 buttonStyle={{ width: 200 }}
                 containerStyle={{ margin: 5 }}
                 onPress={() => navigation.navigate("Login")}
                 title="Back to Login"
+            /> */}
+            <View style={appStyles.inputContainer}>
+            
+            <Input
+                errorMessage={errorGivenName}
+                label="Given name"
+                placeholder="Enter your given name"
+                onChangeText={val => {validateGivenName(val)}}
             />
+            <Input
+                errorMessage={errorFamilyName}
+                label="Family name"
+                placeholder="Enter your family name"
+                onChangeText={val => {validateFamilyName(val)}}
+            />
+            <Input
+                errorMessage={errorUsername}
+                label="Username"
+                placeholder="Enter a username"
+                onChangeText={val => {validateUsername(val)}}
+            />
+            <Input
+                errorMessage={errorEmail}
+                label="Email"
+                placeholder="Enter an email"
+                onChangeText={val => {validateEmail(val)}}
+            />
+            <Input
+                errorMessage={errorPassword}
+                label="Password"
+                placeholder="Create a passsword"
+                onChangeText={val => {validatePassword(val)}}
+                secureTextEntry={true}
+            />
+            <Input
+                errorMessage={errorConfirmPassword}
+                label="Confirm your password"
+                placeholder="Repeat the password"
+                onChangeText={val => {validateConfirmPassword(val)}}
+                secureTextEntry={true}
+            />
+            </View>
+            
+            <Button
+                buttonStyle={{ width: 200 }}
+                containerStyle={{ margin: 5 }}
+                onPress={handleSignUp}
+                title="Sign Up"
+            />
+              
         </View>
     
     )

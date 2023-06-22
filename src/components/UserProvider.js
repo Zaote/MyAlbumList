@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import initialData from '../initialData'
 
@@ -30,13 +30,13 @@ const actions = {
     //     saveUsers(updatedUsers);
     //     return { ...state, users: updatedUsers };
     // },
-    // createUser: (state, action) => {
-    //     const user = action.payload;
-    //     user.id = Math.random()
-    //     const updatedUsers = [...state.users, user];
-    //     saveUsers(updatedUsers);
-    //     return { ...state, users: updatedUsers };
-    // },
+    createUser: (state, action) => {
+        const user = action.payload;
+        const updatedUsers = [...state.context, user];
+        saveContext(updatedUsers);
+        console.warn(updatedUsers)
+        return { ...state, context: updatedUsers };
+    },
     // updateUser: (state, action) => {
     //     const updated = action.payload;
     //     const updatedUsers = state.users.map(u => u.id === updated.id ? updated : u);
@@ -46,6 +46,10 @@ const actions = {
     loadContext: (state, action) => {
         const loadedContext = action.payload.context;
         return { ...state, context: loadedContext };
+    },
+    loginUser: (state, action) => {
+        const loggedInUser = action.payload;
+        return { ...state, loggedInUser };
     },
     // updateMultipleUsers: (state, action) => {
     //     const updatedUsers = state.users.map(u => {

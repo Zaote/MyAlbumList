@@ -2,6 +2,7 @@
 const initialData = {
     // password: 1234567
     Sting: {
+        id: 123123,
         givenName: "Gordon Matthew Thomas",
         familyName: "Sumner",
         email: 'stingthepolice@coolmail.com',
@@ -10,6 +11,7 @@ const initialData = {
     },
     // password: theworld
     Dio: {
+        id: 313444,
         givenName: "Ronald James",
         familyName: "Padavona",
         email: 'ronniejamesdio@coolmail.com',
