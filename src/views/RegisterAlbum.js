@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { Button, Input } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker'
 import appStyles from '../appStyles';
@@ -8,11 +9,12 @@ export default function RegisterAlbum({navigation}){
 
     const [pickedImagePath, setPickedImagePath] = useState('')
     const [albumName, setAlbumName] = useState('')
+    const [albumArtist, setAlbumArtist] = useState('')
 
     const saveAlbum = async () => {
         try {
-            if (!albumName || !pickedImagePath) {
-                alert("Please enter the album name and select an image.")
+            if (!albumName || !albumArtist) {
+                alert("Please enter the album title, artist")
                 return
             }
 
@@ -27,6 +29,7 @@ export default function RegisterAlbum({navigation}){
 
             const newAlbum = {
                 name: albumName,
+                artist: albumArtist,
                 path: pickedImagePath,
             }
 
@@ -37,6 +40,7 @@ export default function RegisterAlbum({navigation}){
 
             setAlbumName('')
             setPickedImagePath('')
+            setAlbumArtist('')
         } catch (error) {
             console.log('Error saving album:', error)
         }
@@ -67,27 +71,65 @@ export default function RegisterAlbum({navigation}){
         }
     }
 
+    const handleImagePress = () => {
+        Alert.alert(
+          'Choose an Option',
+          'Select an image from the gallery or take a new photo:',
+          [
+            {
+              text: 'Gallery',
+              onPress: showImagePicker
+            },
+            {
+              text: 'Camera',
+              onPress: openCamera
+            },
+          ],
+          { cancelable: true }
+        );
+      };
+
     return (
         <View style = {appStyles.container}>
             <Text>Register Album</Text>
-            <View styles = {styles.buttonContainer}>
-                <Button onPress = {showImagePicker} title = "Select an image" />
-                <Button onPress = {openCamera} title = "Open camera" />
-            </View>
             <View style = {styles.imageContainer}>
                 {
-                    pickedImagePath !== '' && <Image
-                        source = {{ uri: pickedImagePath }}
-                        style = {styles.image}
-                    />
+                    // pickedImagePath !== '' && <Image
+                    //     source = {{ uri: pickedImagePath }}
+                    //     style = {styles.image}
+                    // />
+                    pickedImagePath ? 
+                        <TouchableOpacity onPress = {handleImagePress}>
+                        <Image
+                            source = {{ uri: pickedImagePath }}
+                            style = {styles.image}
+                        />
+                        </TouchableOpacity>  
+                    : 
+                        <TouchableOpacity onPress = {handleImagePress}>
+                        <Image                            
+                            source = {require('../../assets/Default_Album_Artwork.png')}
+                            style = {styles.image}
+                        />
+                        </TouchableOpacity>                     
                 }
             </View>
-            <TextInput
+            <Input
                 style = {styles.input}
-                placeholder = "Enter album name"
+                placeholder = "Enter album title"
                 value = {albumName}
                 onChangeText = {setAlbumName}
             />
+            <Input
+                style = {styles.input}
+                placeholder = "Enter album artist"
+                value = {albumArtist}
+                onChangeText = {setAlbumArtist}
+            />
+            {/* <View styles = {styles.buttonContainer}>
+                <Button onPress = {showImagePicker} title = "Select an image" />
+                <Button onPress = {openCamera} title = "Open camera" />
+            </View> */}
             <Button onPress = {saveAlbum} title = "Save album" />
         </View>
     )
@@ -103,8 +145,8 @@ const styles = StyleSheet.create({
     padding: 30
     },
     image: {
-    width: 400,
-    height: 300,
+    width: 250,
+    height: 250,
     resizeMode: 'cover'
     },
     input: {

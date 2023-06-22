@@ -31,7 +31,7 @@ export default function AlbumList({navigation}) {
             const data = await AsyncStorage.getItem("albumData")
             if (data !== null) {
                 setAlbumData(JSON.parse(data))
-                console.log(data)
+                //console.log(data)
             }
         } catch (error) {
             console.log("Error retrieving album data:", error)
@@ -40,7 +40,12 @@ export default function AlbumList({navigation}) {
 
     const renderItem = ({ item }) => (
         <View style = {styles.albumItem}>
-            <Image source = {{ uri: item.path }} style = {styles.albumCover} />
+            {/* <Image source = {{ uri: item.path }} style = {styles.albumCover} /> */}
+            {item.path !== '' ? (
+              <Image source = {{ uri: item.path }} style = {styles.albumCover} />
+            ) : (
+              <Image source = {require('../../assets/Default_Album_Artwork.png')} style = {styles.albumCover} />
+            )}
             <Text style = {styles.albumName}>{item.name}</Text>
         </View>
     )
