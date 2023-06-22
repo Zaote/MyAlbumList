@@ -19,6 +19,7 @@
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "expo": "~48.0.18",
+    "expo-image-picker": "^14.1.1",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.8",
