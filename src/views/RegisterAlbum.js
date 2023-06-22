@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input } from '@rneui/base';
+import React, { useState, useContext } from 'react';
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { Button, Input, Text } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker'
 import appStyles from '../appStyles';
+import UsersContext from '../components/UserProvider'
 
 export default function RegisterAlbum({navigation}){
-
+    const { state, dispatch } = useContext(UsersContext);
     const [pickedImagePath, setPickedImagePath] = useState('')
     const [albumName, setAlbumName] = useState('')
     const [albumArtist, setAlbumArtist] = useState('')
 
     const saveAlbum = async () => {
-        try {
-            if (!albumName || !albumArtist) {
-                alert("Please enter the album title, artist")
-                return
-            }
+        // try {
+            // if (!albumName || !albumArtist) {
+            //     alert("Please enter the album title, artist")
+            //     return
+            // }
 
             //Carrega os albums já existentes pra não sobrescrever tudo igual tava acontecendo (mongol)
-            const existingAlbums = await AsyncStorage.getItem('albumData')
-            let updatedAlbums = []
+            // const existingAlbums = await AsyncStorage.getItem('albumData')
+            // const allAlbuns = state.context[state.loggedInUser].albumData.albums
 
-            if (existingAlbums) {
-                //Caso já existam albums joga eles dentro da updatedALbums
-                updatedAlbums = JSON.parse(existingAlbums)
-            }
+            
+            // let updatedAlbums = []
+
+            // if (allAlbuns) {
+            //     //Caso já existam albums joga eles dentro da updatedALbums
+            //     updatedAlbums = JSON.parse(allAlbuns)
+            // }
 
             const newAlbum = {
                 name: albumName,
@@ -33,17 +37,23 @@ export default function RegisterAlbum({navigation}){
                 path: pickedImagePath,
             }
 
-            updatedAlbums.push(newAlbum)
+            dispatch({
+                type: 'createAlbum',
+                payload: {album: newAlbum, user: state.loggedInUser},
+            })
+
+
+        //     updatedAlbums.push(newAlbum)
             
-            //Salva o updatedAlbums devolta no Async
-            await AsyncStorage.setItem('albumData', JSON.stringify(updatedAlbums))
+        //     //Salva o updatedAlbums devolta no Async
+        //     await AsyncStorage.setItem('albumData', JSON.stringify(updatedAlbums))
 
             setAlbumName('')
             setPickedImagePath('')
             setAlbumArtist('')
-        } catch (error) {
-            console.log('Error saving album:', error)
-        }
+        // } catch (error) {
+        //     console.log('Error saving album:', error)
+        // }
     }
 
     const showImagePicker = async () => {
@@ -91,7 +101,7 @@ export default function RegisterAlbum({navigation}){
 
     return (
         <View style = {appStyles.container}>
-            <Text>Register Album</Text>
+            <Text style={appStyles.title}>Register Album</Text>
             <View style = {styles.imageContainer}>
                 {
                     // pickedImagePath !== '' && <Image

@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import initialData from '../initialData'
 
 const UsersContext = createContext();
-const initialState = {context: []};
+// const initialState = {context: {}};
+const initialState = initialData
 
 async function saveContext(context) {
     try {
@@ -50,6 +51,27 @@ const actions = {
     loginUser: (state, action) => {
         const loggedInUser = action.payload;
         return { ...state, loggedInUser };
+    },
+    createAlbum: (state, action) => {
+        const album = action.payload.album
+        const loggedInUser = action.payload.user
+        const updatedAlbums = [...state.context[loggedInUser].albumData.albums, album];
+        const updatedAlbumData = {
+            ...state.context[loggedInUser].albumData,
+            albums: updatedAlbums,
+        };
+        const updatedUser = {
+            ...state.context[loggedInUser],
+            albumData: updatedAlbumData,
+        };
+        console.log(updatedUser.albums)
+        const updatedContext = {
+            ...state.context,
+            [loggedInUser]: updatedUser,
+        };
+        console.log(updatedContext)
+        saveContext(updatedContext);
+        return {...state, context: updatedContext };
     },
     // updateMultipleUsers: (state, action) => {
     //     const updatedUsers = state.users.map(u => {
