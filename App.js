@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { UserProvider } from './src/components/UserProvider';
 import Login from './src/views/Login';
 import SignUp from './src/views/SignUp';
 import AllAlbums from './src/views/AllAlbums';
@@ -40,7 +41,7 @@ function Lists({navigation}){
 
 export default function App() {
   return (
-    // <UserProvider>
+    <UserProvider>
     <NavigationContainer>
         <MainStack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
             <MainStack.Screen name="Login" component={Login}/>
@@ -49,7 +50,7 @@ export default function App() {
             <MainStack.Screen name="Album Information" component={AlbumInformation}/>
         </MainStack.Navigator>
     </NavigationContainer>
-    // </UserProvider>    
+    </UserProvider>    
   );
 }
 
