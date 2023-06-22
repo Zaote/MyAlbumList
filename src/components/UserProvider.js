@@ -34,7 +34,7 @@ const actions = {
         const user = action.payload;
         const updatedUsers = {...state.context, ...user};
         saveContext(updatedUsers);
-        console.warn(updatedUsers)
+        //console.warn(updatedUsers)
         return { ...state, context: updatedUsers };
     },
     // updateUser: (state, action) => {

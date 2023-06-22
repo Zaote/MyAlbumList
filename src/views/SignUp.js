@@ -152,7 +152,7 @@ export default function SignUp({navigation}){
                 type: 'createUser',
                 payload: newUser,
             })
-            navigation.navigate("Home")
+            navigation.navigate("Login")
         }
     }
 
