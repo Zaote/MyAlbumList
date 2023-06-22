@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input } from '@rneui/base';
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { Button, Input, Text } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker'
 import appStyles from '../appStyles';
@@ -48,9 +48,9 @@ export default function RegisterAlbum({navigation}){
         //     //Salva o updatedAlbums devolta no Async
         //     await AsyncStorage.setItem('albumData', JSON.stringify(updatedAlbums))
 
-        //     setAlbumName('')
-        //     setPickedImagePath('')
-        //     setAlbumArtist('')
+            setAlbumName('')
+            setPickedImagePath('')
+            setAlbumArtist('')
         // } catch (error) {
         //     console.log('Error saving album:', error)
         // }
@@ -101,7 +101,7 @@ export default function RegisterAlbum({navigation}){
 
     return (
         <View style = {appStyles.container}>
-            <Text>Register Album</Text>
+            <Text style={appStyles.title}>Register Album</Text>
             <View style = {styles.imageContainer}>
                 {
                     // pickedImagePath !== '' && <Image

@@ -7,7 +7,7 @@ import UsersContext from '../components/UserProvider'
 
 export default function AlbumList({navigation}) {
     const { state, dispatch } = useContext(UsersContext);
-    const [albumData, setAlbumData] = useState([])
+    const [allAlbums, setAllAlbums] = useState([])
     
     //Aqui temos 2 opções de gambiarra kkk, a primeira opção é deixar albumData dentro de useEffect como visto abaixo
 
@@ -30,7 +30,7 @@ export default function AlbumList({navigation}) {
     const loadAlbumData = () => {
         // try {
             // const data = await AsyncStorage.getItem("albumData")
-            const allAlbums = state.context[state.loggedInUser].albumData.albums
+            setAllAlbums(state.context[state.loggedInUser].albumData.albums)
             // if (data !== null) {
             //     setAlbumData(JSON.parse(data))
             //     //console.log(data)
@@ -48,13 +48,16 @@ export default function AlbumList({navigation}) {
             ) : (
               <Image source = {require('../../assets/Default_Album_Artwork.png')} style = {styles.albumCover} />
             )}
-            <Text style = {styles.albumName}>{item.name}</Text>
+            <View style={{flexDirection: 'column'}}>
+              <Text style = {styles.albumName}>{item.name}</Text>
+              <Text style = {styles.albumName}>{item.artist}</Text>
+            </View>
+            
         </View>
     )
 
     return (
         <View style = {appStyles.container}>
-            <Text>All Albums</Text>
             <FlatList
                 data = {allAlbums}
                 renderItem = {renderItem}
@@ -69,13 +72,16 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: 10,
+      flex: 1,
+      paddingRight: 80,
     },
     albumCover: {
-      width: 100,
-      height: 100,
+      width: 130,
+      height: 130,
       marginRight: 10,
+      
     },
     albumName: {
-      fontSize: 16,
+      fontSize: 21,
     },
   });
