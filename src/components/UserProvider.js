@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect, useState } fro
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import initialData from '../initialData'
 
+// AsyncStorage.clear()
 const UsersContext = createContext();
 // const initialState = {context: {}};
 const initialState = initialData
@@ -64,12 +65,12 @@ const actions = {
             ...state.context[loggedInUser],
             albumData: updatedAlbumData,
         };
-        console.log(updatedUser.albums)
+        //console.log(updatedUser.albums)
         const updatedContext = {
             ...state.context,
             [loggedInUser]: updatedUser,
         };
-        console.log(updatedContext)
+        //console.log(updatedContext)
         saveContext(updatedContext);
         return {...state, context: updatedContext };
     },
