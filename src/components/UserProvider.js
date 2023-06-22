@@ -32,7 +32,7 @@ const actions = {
     // },
     createUser: (state, action) => {
         const user = action.payload;
-        const updatedUsers = [...state.context, user];
+        const updatedUsers = {...state.context, ...user};
         saveContext(updatedUsers);
         console.warn(updatedUsers)
         return { ...state, context: updatedUsers };
@@ -76,23 +76,23 @@ export function UserProvider({ children }) {
         return fn ? fn(state, action) : state;
     };
     
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const loadedContext = await loadContext();
+    useEffect(() => {
+        async function fetchData() {
+            const loadedContext = await loadContext();
 
-    //         if (loadedContext.context.length !== 0) {
-    //             dispatch({ type: 'loadContext', payload: loadedContext });
-    //         } else {
-    //             dispatch({ type: 'loadContext', payload: {initialData} })
-    //             saveContext(initialData)
-    //         }
-    //     }
+            if (loadedContext.context.length !== 0) {
+                dispatch({ type: 'loadContext', payload: loadedContext });
+            } else {
+                dispatch({ type: 'loadContext', payload: {initialData} })
+                saveContext(initialData)
+            }
+        }
 
-    //     fetchData();
-    // }, []);
+        fetchData();
+    }, []);
 
-    // const [state, dispatch] = useReducer(reducer, initialState);
-    const [state, dispatch] = useReducer(reducer, {context: initialData})
+    const [state, dispatch] = useReducer(reducer, initialState);
+    // const [state, dispatch] = useReducer(reducer, {context: initialData})
     
 
     return (

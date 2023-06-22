@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import appStyles from '../appStyles';
-import { Input, Button } from '@rneui/base';
+import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
 
 var bcrypt = require('bcryptjs');
@@ -136,7 +136,6 @@ export default function SignUp({navigation}){
     }
 
     function handleSignUp(){
-        // console.warn(state.context)
         const flagSignUp = flagGivenName&&flagFamilyName&&flagUsername&&flagEmail&&flagPassword&&flagPassword 
         if(flagSignUp){
             const newUser = {
@@ -153,14 +152,14 @@ export default function SignUp({navigation}){
                 type: 'createUser',
                 payload: newUser,
             })
-            // navigation.navigate("Home")
+            navigation.navigate("Home")
         }
     }
 
 
     return (
         <View style={appStyles.container}>
-            <Text>Sign Up</Text>
+            <Text style={appStyles.title}>Sign Up</Text>
             
             {/* <Button
                 buttonStyle={{ width: 200 }}

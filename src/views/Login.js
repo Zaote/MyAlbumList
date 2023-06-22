@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import appStyles from '../appStyles';
 import { TouchableOpacity } from 'react-native';
-import { Input, Button } from '@rneui/base';
+import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
 
 var bcrypt = require('bcryptjs');
@@ -37,8 +37,6 @@ export default function Login({ navigation }) {
         setMsg('The password is invalid!');
       }
     }
-    // const hashedPassword = bcrypt.hashSync("theworld", salt);
-    // console.warn(`Hash: ${hashedPassword}`);
   }
 
   return (

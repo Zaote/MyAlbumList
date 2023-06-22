@@ -10,7 +10,7 @@ export default StyleSheet.create({
     title: {
       fontSize: 50, // Increase the font size
       fontWeight: 'bold',
-      marginBottom: 70,
+      marginBottom: 50,
     },
     inputContainer: {
       width: '80%',
