@@ -23,15 +23,17 @@ export default function Login({ navigation }) {
   const [msg, setMsg] = useState('');
 
   function handleLogin(username, password) {
-    if (!(username in state.context)) {
-      setMsg(`The user ${username} does not exist!`);
+    const usr = username.trim()
+    const pass = password.trim()
+    if (!(usr in state.context)) {
+      setMsg(`The user ${usr} does not exist!`);
     } else {
       const isCorrectPassword = bcrypt.compareSync(
-        password,
-        state.context[username].password
+        pass,
+        state.context[usr].password
       )
       if (isCorrectPassword) {
-        const loggedInUser = username;
+        const loggedInUser = usr;
         dispatch({ type: 'loginUser', payload: loggedInUser });
         navigation.navigate('Home');
       } else {

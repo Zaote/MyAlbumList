@@ -25,7 +25,6 @@ function startsWithLetter(strg){
 export default function SignUp({navigation}){
     const { state, dispatch } = useContext(UsersContext);
 
-
     const [givenName, setGivenName] = useState("")
     const [flagGivenName, setFlagGivenName] = useState(false)
     const [errorGivenName, setErrorGivenName] = useState("")
@@ -52,19 +51,20 @@ export default function SignUp({navigation}){
     
 
     function validateUsername(val){
-        setUsername(val)
+        const trimmedVal = val.trim()
+        setUsername(trimmedVal)
         const regex = /^[a-zA-Z][a-zA-Z0-9_]{2,17}$/
-        if(val.length < 3){
+        if(trimmedVal.length < 3){
             setErrorUsername("Too small. It should contain 3 or more characters!")
             setFlagUsername(false)
-        }else if(val.length > 18){
+        }else if(trimmedVal.length > 18){
             setErrorUsername("Too big. It should contain less than 19 characters!")
             setFlagUsername(false)
-        }else if(!startsWithLetter(val)){
+        }else if(!startsWithLetter(trimmedVal)){
             setErrorUsername("It must start with a letter!")
             setFlagUsername(false)
         }
-        else if(regex.test(val)){
+        else if(regex.test(trimmedVal)){
             setErrorUsername("")
             setFlagUsername(true)
         }else{
@@ -74,9 +74,10 @@ export default function SignUp({navigation}){
     }
 
     function validateEmail(val){
-        setEmail(val)
+        const trimmedVal = val.trim()
+        setEmail(trimmedVal)
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if(regex.test(val)){
+        if(regex.test(trimmedVal)){
             setErrorEmail("")
             setFlagEmail(true)
         }else{
@@ -86,8 +87,9 @@ export default function SignUp({navigation}){
     }
 
     function validateGivenName(val){
-        setGivenName(val)
-        if(val.length > 0){
+        const trimmedVal = val.trim()
+        setGivenName(trimmedVal)
+        if(trimmedVal.length > 0){
             setFlagGivenName(true)
         }else{
             setFlagGivenName(false)
@@ -95,8 +97,9 @@ export default function SignUp({navigation}){
     }
 
     function validateFamilyName(val){
-        setFamilyName(val)
-        if(val.length > 0){
+        const trimmedVal = val.trim()
+        setFamilyName(trimmedVal)
+        if(trimmedVal.length > 0){
             setFlagFamilyName(true)
         }else{
             setFlagFamilyName(false)
@@ -104,18 +107,19 @@ export default function SignUp({navigation}){
     }
 
     function validatePassword(val){
-        setPassword(val)
-        if(val.length < 8){
+        const trimmedVal = val.trim()
+        setPassword(trimmedVal)
+        if(trimmedVal.length < 8){
             setErrorPassword("Too small. It should contain 8 or more characters!")
             setFlagPassword(false)
-        }else if(val.length > 64){
+        }else if(trimmedVal.length > 64){
             setErrorPassword("Too big. It should contain less than 65 characters!")
             setFlagPassword(false)
         }else{
             setErrorPassword("")
             setFlagPassword(true)
         }
-        if(val === confirmPassword){
+        if(trimmedVal === confirmPassword){
             setErrorConfirmPassword("")
             setFlagConfirmPassword(true)
         }else{
@@ -125,8 +129,9 @@ export default function SignUp({navigation}){
     }
 
     function validateConfirmPassword(val){
-        setConfirmPassword(val)
-        if(val === password){
+        const trimmedVal = val.trim()
+        setConfirmPassword(trimmedVal)
+        if(trimmedVal === password){
             setErrorConfirmPassword("")
             setFlagConfirmPassword(true)
         }else{
@@ -153,6 +158,7 @@ export default function SignUp({navigation}){
                 payload: newUser,
             })
             navigation.navigate("Login")
+            console.warn(state.context)
         }
     }
 

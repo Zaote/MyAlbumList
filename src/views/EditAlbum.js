@@ -20,8 +20,8 @@ export default function AlbumEdit({ navigation, route }) {
         const updatedAlbum = {
           ...album,
           path: pickedImagePath,
-          name: albumName,
-          artist: albumArtist,
+          name: albumName.trim(),
+          artist: albumArtist.trim(),
         };
         //console.log(updatedAlbum)
         dispatch({

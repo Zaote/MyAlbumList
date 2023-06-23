@@ -49,7 +49,7 @@ export default function AlbumList({navigation}) {
     // )
 
     const renderItem = ({ item }) => (
-      <ListItem bottomDivider>
+      <ListItem bottomDivider onPress={() => navigation.navigate('Album Information', {album: item})}>
         <View style={styles.albumItem}>
           <View style={styles.albumCoverContainer}>
             {item.path !== '' ? (
