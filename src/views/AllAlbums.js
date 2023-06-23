@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   albumCoverContainer: {
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
     marginRight: 10,
   },
   albumCover: {

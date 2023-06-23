@@ -62,7 +62,8 @@ export default function AlbumEdit({ navigation, route }) {
 
     return (
         <View style={appStyles.container}>
-        <Text style={appStyles.title}>Edit Album</Text>
+        <Text style={[appStyles.title]}>Edit Album</Text>
+        {/* <View style={styles.imageContainer}> */}
         <View style={styles.imageContainer}>
             {album.path !== '' ? (
             <Image source={{ uri: album.path }} style={styles.image} />
@@ -73,19 +74,27 @@ export default function AlbumEdit({ navigation, route }) {
             />
             )}
         </View>
-        <Input
-            style={styles.input}
-            placeholder="Enter album title"
-            value={albumName}
-            onChangeText={setAlbumName}
+        <View style={appStyles.inputContainer}>
+          <Input
+              style={appStyles.input}
+              placeholder="Enter album title"
+              value={albumName}
+              onChangeText={setAlbumName}
+          />
+          <Input
+              style={appStyles.input}
+              placeholder="Enter album artist"
+              value={albumArtist}
+              onChangeText={setAlbumArtist}
+          />
+        </View>
+        <Button
+          title="Save album"
+          onPress={saveAlbum}  
+          buttonStyle={{ width: 200, height: 50 }}
+          containerStyle={{ margin: 5 }}
+        
         />
-        <Input
-            style={styles.input}
-            placeholder="Enter album artist"
-            value={albumArtist}
-            onChangeText={setAlbumArtist}
-        />
-        <Button onPress={saveAlbum} title="Save album" />
         </View>
     );
 }
@@ -93,6 +102,7 @@ export default function AlbumEdit({ navigation, route }) {
 const styles = StyleSheet.create({
   imageContainer: {
     padding: 30,
+    marginBottom: 15
   },
   image: {
     width: 250,

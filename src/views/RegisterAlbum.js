@@ -143,7 +143,12 @@ export default function RegisterAlbum({navigation}){
                 <Button onPress = {showImagePicker} title = "Select an image" />
                 <Button onPress = {openCamera} title = "Open camera" />
             </View> */}
-            <Button onPress = {saveAlbum} title = "Save album" />
+            <Button  
+                title = "Save album"
+                onPress = {saveAlbum}
+                buttonStyle={{ width: 200, height: 50 }}
+                containerStyle={{ margin: 5 }}
+            />
         </View>
     )
 }
