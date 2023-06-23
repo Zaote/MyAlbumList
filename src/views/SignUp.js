@@ -140,7 +140,7 @@ export default function SignUp({navigation}){
         if(flagSignUp){
             const newUser = {
                 [username]: {
-                    id: parseInt(Math.random() * 10e8),
+                    id: Date.now().toString() + parseInt(Math.random() * 10000).toString(),
                     givenName: givenName,
                     familyName: familyName,
                     email: email,

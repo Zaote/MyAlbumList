@@ -69,10 +69,30 @@ const actions = {
             ...state.context,
             [loggedInUser]: updatedUser,
         };
-        //console.log(updatedContext)
         saveContext(updatedContext);
         return {...state, context: updatedContext };
     },
+    updateAlbum: (state, action) => {
+        const updatedAlbum = action.payload.album
+        const user = action.payload.user
+        const updatedAlbums = state.context[user].albumData.albums.map(al => al.id === updatedAlbum.id ? updatedAlbum : al);
+        const updatedAlbumData = {
+            ...state.context[user].albumData,
+            albums: updatedAlbums,
+        };
+        const updatedUser = {
+            ...state.context[user],
+            albumData: updatedAlbumData,
+        };
+        const updatedContext = {
+            ...state.context,
+            [user]: updatedUser,
+        };
+        saveContext(updatedContext);
+        return {...state, context: updatedContext };
+    }
+
+
     // updateMultipleUsers: (state, action) => {
     //     const updatedUsers = state.users.map(u => {
     //         const userUpdated = action.payload.find(usr => usr.id === u.id);

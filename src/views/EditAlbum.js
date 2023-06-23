@@ -47,14 +47,14 @@ export default function AlbumEdit({ navigation, route }) {
 
     const saveAlbum = () => {
         const updatedAlbum = {
-        ...album,
-        name: albumName,
-        artist: albumArtist,
+          ...album,
+          name: albumName,
+          artist: albumArtist,
         };
         //console.log(updatedAlbum)
         dispatch({
-        type: 'updateAlbum',
-        payload: { album: updatedAlbum, user: state.loggedInUser },
+          type: 'updateAlbum',
+          payload: { album: updatedAlbum, user: state.loggedInUser },
         });
         
         navigation.goBack();
