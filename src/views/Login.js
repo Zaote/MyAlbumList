@@ -4,6 +4,7 @@ import appStyles from '../appStyles';
 import { TouchableOpacity } from 'react-native';
 import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var bcrypt = require('bcryptjs');
 

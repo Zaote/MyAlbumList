@@ -65,7 +65,6 @@ const actions = {
             ...state.context[loggedInUser],
             albumData: updatedAlbumData,
         };
-        //console.log(updatedUser.albums)
         const updatedContext = {
             ...state.context,
             [loggedInUser]: updatedUser,

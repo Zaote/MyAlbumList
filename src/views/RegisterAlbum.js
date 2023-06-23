@@ -124,18 +124,20 @@ export default function RegisterAlbum({navigation}){
                         </TouchableOpacity>                     
                 }
             </View>
-            <Input
-                style = {styles.input}
-                placeholder = "Enter album title"
-                value = {albumName}
-                onChangeText = {setAlbumName}
-            />
-            <Input
-                style = {styles.input}
-                placeholder = "Enter album artist"
-                value = {albumArtist}
-                onChangeText = {setAlbumArtist}
-            />
+            <View style={appStyles.inputContainer}>
+                <Input
+                    style = {appStyles.input}
+                    placeholder = "Enter album title"
+                    value = {albumName}
+                    onChangeText = {setAlbumName}
+                />
+                <Input
+                    style = {appStyles.input}
+                    placeholder = "Enter album artist"
+                    value = {albumArtist}
+                    onChangeText = {setAlbumArtist}
+                />
+            </View>
             {/* <View styles = {styles.buttonContainer}>
                 <Button onPress = {showImagePicker} title = "Select an image" />
                 <Button onPress = {openCamera} title = "Open camera" />

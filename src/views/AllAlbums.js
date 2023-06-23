@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
-import { ListItem } from '@rneui/base';
+import { ListItem, Icon, Button } from '@rneui/base';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider'
@@ -49,7 +49,7 @@ export default function AlbumList({navigation}) {
     // )
 
     const renderItem = ({ item }) => (
-      <ListItem>
+      <ListItem bottomDivider>
         <View style={styles.albumItem}>
           <View style={styles.albumCoverContainer}>
             {item.path !== '' ? (
@@ -61,10 +61,17 @@ export default function AlbumList({navigation}) {
               />
             )}
           </View>
+          <ListItem.Content>
           <View style={styles.albumTextContainer}>
             <Text style={styles.albumName}>{item.name}</Text>
-            <Text style={styles.albumName}>{item.artist}</Text>
+            <Text style={styles.albumName}>by {item.artist}</Text>
           </View>
+          </ListItem.Content>
+          <Button
+            onPress={() => {}}
+            type='clear'
+            icon={<Icon name='edit' size={25} color='black' />}
+          />
         </View>
       </ListItem>
     );
@@ -85,11 +92,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    paddingRight: 80,
   },
   albumCoverContainer: {
-    width: 130,
-    height: 130,
+    width: 120,
+    height: 120,
     marginRight: 10,
   },
   albumCover: {
