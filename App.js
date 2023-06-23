@@ -13,6 +13,7 @@ import ToBeListenedAlbums from './src/views/ToBeListenedAlbums';
 import RegisterAlbum from './src/views/RegisterAlbum';
 import Settings from './src/views/Settings';
 import AlbumInformation from './src/views/AlbumInformation';
+import EditAlbum from './src/views/EditAlbum';
 
 const MainStack = createNativeStackNavigator()
 const HomeTabs = createBottomTabNavigator()
@@ -48,6 +49,7 @@ export default function App() {
             <MainStack.Screen name="Sign Up" component={SignUp}/>
             <MainStack.Screen name="Home" component={Home}/>
             <MainStack.Screen name="Album Information" component={AlbumInformation}/>
+            <MainStack.Screen name="Album Edit" component={EditAlbum}/>
         </MainStack.Navigator>
     </NavigationContainer>
     </UserProvider>    
