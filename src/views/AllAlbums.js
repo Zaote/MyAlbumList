@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
-import { ListItem, Icon, Button } from '@rneui/base';
+import { ListItem, Button, Icon } from '@rneui/base';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider'
@@ -66,12 +66,6 @@ export default function AlbumList({navigation}) {
             <Text style={styles.albumName}>{item.name}</Text>
             <Text style={styles.albumName}>by {item.artist}</Text>
           </View>
-          </ListItem.Content>
-          <Button
-            onPress={() => {}}
-            type='clear'
-            icon={<Icon name='edit' size={25} color='black' />}
-          />
         </View>
       </ListItem>
     );
