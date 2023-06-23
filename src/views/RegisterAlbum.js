@@ -32,6 +32,7 @@ export default function RegisterAlbum({navigation}){
             // }
 
             const newAlbum = {
+                id: Date.now().toString() + parseInt(Math.random() * 10000).toString(),
                 name: albumName,
                 artist: albumArtist,
                 path: pickedImagePath,

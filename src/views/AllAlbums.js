@@ -66,6 +66,12 @@ export default function AlbumList({navigation}) {
             <Text style={styles.albumName}>{item.name}</Text>
             <Text style={styles.albumName}>by {item.artist}</Text>
           </View>
+          </ListItem.Content>
+          <Button
+            onPress = {() => navigation.navigate('Album Edit', {album: item})}
+            type = 'clear'
+            icon = {<Icon name = 'edit' size = {25} color = 'black' />}
+          />
         </View>
       </ListItem>
     );
