@@ -14,6 +14,7 @@ import RegisterAlbum from './src/views/RegisterAlbum';
 import Settings from './src/views/Settings';
 import AlbumInformation from './src/views/AlbumInformation';
 import EditAlbum from './src/views/EditAlbum';
+import { AntDesign } from '@expo/vector-icons';
 
 const MainStack = createNativeStackNavigator()
 const HomeTabs = createBottomTabNavigator()
@@ -22,9 +23,15 @@ const ListDrawer = createDrawerNavigator()
 function Home({navigation}){
   return (
     <HomeTabs.Navigator initialRouteName="All Albums" screenOptions={{headerShown: false}}>
-      <HomeTabs.Screen name="Lists" component={Lists}/>
-      <HomeTabs.Screen name="Register New Album" component={RegisterAlbum}/>
-      <HomeTabs.Screen name="Settings" component={Settings}/>
+      <HomeTabs.Screen name="Lists" component={Lists} options={{
+        tabBarIcon: ({color, size}) => ( <AntDesign name="bars" size={size} color={color}/>)}}
+      />
+      <HomeTabs.Screen name="Register New Album" component={RegisterAlbum} options={{
+        tabBarIcon: ({color, size}) => ( <AntDesign name="plus" size={size} color={color}/>)}}
+      />
+      <HomeTabs.Screen name="Settings" component={Settings} options={{
+        tabBarIcon: ({color, size}) => ( <AntDesign name="setting" size={size} color={color}/>)}}
+      />
     </HomeTabs.Navigator>
   )
 }

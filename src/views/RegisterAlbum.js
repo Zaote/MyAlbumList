@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input, Text } from '@rneui/base';
+import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Button, Input, Text, Image } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker'
 import appStyles from '../appStyles';
@@ -111,14 +111,14 @@ export default function RegisterAlbum({navigation}){
                     // />
                     pickedImagePath ? 
                         <TouchableOpacity onPress = {handleImagePress}>
-                        <Image
+                        <Image 
                             source = {{ uri: pickedImagePath }}
                             style = {styles.image}
                         />
                         </TouchableOpacity>  
                     : 
                         <TouchableOpacity onPress = {handleImagePress}>
-                        <Image                            
+                        <Image                  
                             source = {require('../../assets/Default_Album_Artwork.png')}
                             style = {styles.image}
                         />
