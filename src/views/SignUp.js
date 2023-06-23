@@ -63,6 +63,9 @@ export default function SignUp({navigation}){
         }else if(!startsWithLetter(trimmedVal)){
             setErrorUsername("It must start with a letter!")
             setFlagUsername(false)
+        }else if(trimmedVal in state.context){
+            setErrorUsername("This username already exists!")
+            setFlagUsername(false)
         }
         else if(regex.test(trimmedVal)){
             setErrorUsername("")
@@ -77,13 +80,20 @@ export default function SignUp({navigation}){
         const trimmedVal = val.trim()
         setEmail(trimmedVal)
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if(regex.test(trimmedVal)){
-            setErrorEmail("")
-            setFlagEmail(true)
-        }else{
+        if(!regex.test(trimmedVal)){
             setErrorEmail("This is not an email!")
             setFlagEmail(false)
+            return
         }
+        for(let usr in state.context){
+            if(usr in state.context && state.context[usr].email === trimmedVal){
+                setErrorEmail("This email is already being used!")
+                setFlagEmail(false)
+                return
+            }
+        }
+        setErrorEmail("")
+        setFlagEmail(true)
     }
 
     function validateGivenName(val){
