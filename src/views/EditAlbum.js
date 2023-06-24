@@ -108,6 +108,24 @@ export default function EditAlbum({ navigation, route }) {
     )
   }
 
+  const deletePic = () => {
+    Alert.alert(
+        `Delete album picture?`,
+        `This action cannot be undone!`,   
+        [
+            {
+                text: 'Yes',
+                onPress: () => {setPickedImagePath('')}
+            },
+            {
+                text: 'No',
+                onPress: () => { }
+            },
+        ],
+        {cancelable: true}
+    )
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       {/* <Text style={[appStyles.title]}>Edit Album</Text> */}
@@ -136,6 +154,15 @@ export default function EditAlbum({ navigation, route }) {
                   />
                 </TouchableOpacity>
               )}
+              <View style = {{ position: 'absolute', top: 0, right: -25}}>
+                <Icon
+                    color="red"
+                    name="close"
+                    type="material"
+                    size={40}
+                    onPress={deletePic}
+                />
+              </View>
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <StarRating
