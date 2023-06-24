@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
-import { ListItem, Button, Icon } from '@rneui/base';
+import { View, Text, StyleSheet, FlatList, Image, BackHandler } from 'react-native';
+import { ListItem, Button, Icon, SearchBar } from '@rneui/base';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider'
 
 export default function AlbumList({navigation}) {
     const { state, dispatch } = useContext(UsersContext);
-    const [allAlbums, setAllAlbums] = useState([])
+    const [searchValue, setSearchValue] = useState("")
+    const [shownAlbums, setShownAlbums] = useState([])
     
     //Segunda opção é usar isFocused, onde ele só atualiza quando o usuario mudar pra página AllAlbums, achei essa melhor até o momento
 
@@ -15,38 +16,30 @@ export default function AlbumList({navigation}) {
 
     useEffect(() => {
         if (isFocused) {
-          loadAlbumData();
+          setShownAlbums(state.context[state.loggedInUser].albumData.albums)
         }
     }, [isFocused]);
+    
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
 
-    const loadAlbumData = () => {
-        // try {
-            // const data = await AsyncStorage.getItem("albumData")
-            setAllAlbums(state.context[state.loggedInUser].albumData.albums)
-            // if (data !== null) {
-            //     setAlbumData(JSON.parse(data))
-            //     //console.log(data)
-            // }
-        // } catch (error) {
-        //     console.log("Error retrieving album data:", error)
-        // }
+    function updateSearch(strg){
+      if(strg){
+        const searchResult = state.context[state.loggedInUser].albumData.albums.filter((it) => {
+            const titles = it.title ? it.title : ""
+            const artists = it.artist ? it.artist : ""
+            return (titles.toUpperCase().includes(strg.toUpperCase())) 
+            || (artists.toUpperCase().includes(strg.toUpperCase()))
+        })
+        setShownAlbums(searchResult)
+        setSearchValue(strg)
+      }else{
+        setShownAlbums([...state.context[state.loggedInUser].albumData.albums])
+        setSearchValue(strg)
+      }
     }
-
-    // const renderItem = ({ item }) => (
-    //     <View style = {styles.albumItem}>
-    //         {/* <Image source = {{ uri: item.path }} style = {styles.albumCover} /> */}
-    //         {item.path !== '' ? (
-    //           <Image source = {{ uri: item.path }} style = {styles.albumCover} />
-    //         ) : (
-    //           <Image source = {require('../../assets/Default_Album_Artwork.png')} style = {styles.albumCover} />
-    //         )}
-    //         <View style={{flexDirection: 'column'}}>
-    //           <Text style = {styles.albumName}>{item.name}</Text>
-    //           <Text style = {styles.albumName}>{item.artist}</Text>
-    //         </View>
-            
-    //     </View>
-    // )
 
     const renderItem = ({ item }) => (
       <ListItem bottomDivider onPress={() => navigation.navigate('Album Information', {album: item})}>
@@ -77,9 +70,17 @@ export default function AlbumList({navigation}) {
     );
 
     return (
-        <View style = {appStyles.container}>
+        <View>
+            <SearchBar lightTheme round
+              placeholder="Search album"
+              value={searchValue}
+              onChangeText={updateSearch}
+              inputStyle={{color: "black"}}
+              containerStyle={{backgroundColor: 'white'}}
+              inputContainerStyle={{backgroundColor: '#EEEEEE'}}
+            />
             <FlatList
-                data = {allAlbums}
+                data = {shownAlbums}
                 renderItem = {renderItem}
                 keyExtractor = {(item, index) => `${item.name}_${index}`}
             />

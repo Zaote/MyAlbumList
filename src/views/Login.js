@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import appStyles from '../appStyles';
 import { TouchableOpacity } from 'react-native';
@@ -15,14 +15,13 @@ bcrypt.setRandomFallback((len) => {
 
 var salt = bcrypt.genSaltSync(10)
 
-
 export default function Login({ navigation }) {
   const { state, dispatch } = useContext(UsersContext);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [msg, setMsg] = useState('');
 
-  function handleLogin(username, password) {
+  async function handleLogin(username, password) {
     const usr = username.trim()
     const pass = password.trim()
     if (!(usr in state.context)) {
@@ -40,7 +39,6 @@ export default function Login({ navigation }) {
         setMsg('The password is invalid!');
       }
     }
-    console.warn(state.context)
   }
 
   return (
