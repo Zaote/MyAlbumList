@@ -53,10 +53,10 @@ export default function App() {
     <NavigationContainer>
         <MainStack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
             <MainStack.Screen name="Login" component={Login}/>
-            <MainStack.Screen name="Sign Up" component={SignUp}/>
+            <MainStack.Screen name="Sign Up" component={SignUp} />
             <MainStack.Screen name="Home" component={Home}/>
-            <MainStack.Screen name="Album Information" component={AlbumInformation}/>
-            <MainStack.Screen name="Album Edit" component={EditAlbum}/>
+            <MainStack.Screen name="Album Information" component={AlbumInformation} options={{ headerShown: true }}/>
+            <MainStack.Screen name="Album Edit" component={EditAlbum} options={{ headerShown: true }}/>
         </MainStack.Navigator>
     </NavigationContainer>
     </UserProvider>    

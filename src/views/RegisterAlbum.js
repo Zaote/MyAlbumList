@@ -1,16 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input, Text, Image } from '@rneui/base';
+import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { Button, Input, Text, Image, Icon } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker'
+import * as ImagePicker from 'expo-image-picker';
 import appStyles from '../appStyles';
-import UsersContext from '../components/UserProvider'
+import UsersContext from '../components/UserProvider';
+import StarRating from 'react-native-star-rating-widget';
 
 export default function RegisterAlbum({navigation}){
     const { state, dispatch } = useContext(UsersContext);
     const [pickedImagePath, setPickedImagePath] = useState('')
     const [albumName, setAlbumName] = useState('')
     const [albumArtist, setAlbumArtist] = useState('')
+    const [albumRating, setAlbumRating] = useState(0)
 
     const saveAlbum = async () => {
         // try {
@@ -36,6 +38,7 @@ export default function RegisterAlbum({navigation}){
                 name: albumName.trim(),
                 artist: albumArtist.trim(),
                 path: pickedImagePath,
+                rating: albumRating * 2
             }
 
             dispatch({
@@ -101,8 +104,8 @@ export default function RegisterAlbum({navigation}){
       };
 
     return (
-        <View style = {appStyles.container}>
-            <Text style={appStyles.title}>Register Album</Text>
+        <SafeAreaView style = {appStyles.container}>
+            <Text style={[appStyles.title, {marginBottom: 10}]}>Register Album</Text>
             <View style = {styles.imageContainer}>
                 {
                     // pickedImagePath !== '' && <Image
@@ -124,6 +127,20 @@ export default function RegisterAlbum({navigation}){
                         />
                         </TouchableOpacity>                     
                 }
+            </View>
+            <View style={{justifyContent:"center", alignItems:"center"}}>
+              <StarRating
+                rating={albumRating}
+                onChange={setAlbumRating}
+                starSize={50}
+              />
+              <Icon 
+                color="red"
+                name="close"
+                type="material"
+                size={40}
+                onPress={() => {setAlbumRating(0)}}
+              />
             </View>
             <View style={appStyles.inputContainer}>
                 <Input
@@ -149,7 +166,7 @@ export default function RegisterAlbum({navigation}){
                 buttonStyle={{ width: 200, height: 50 }}
                 containerStyle={{ margin: 5 }}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -160,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
     },
     imageContainer: {
-    padding: 30
+    padding: 20
     },
     image: {
     width: 250,
@@ -174,4 +191,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     },
-    });
+});

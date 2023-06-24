@@ -20,7 +20,7 @@ async function loadContext() {
         const context = await AsyncStorage.getItem('context');
         return { context: context ? JSON.parse(context) : [] };
     } catch (error) {
-        console.log('An error has occurred while loading the users from AsyncStorage', error);
+        console.error('An error has occurred while loading the users from AsyncStorage', error);
         return { context: [] };
     }
 }
@@ -113,7 +113,11 @@ const actions = {
         };
         saveContext(updatedContext);
         return {...state, context: updatedContext };
-    }
+    },
+    clearUsers: (state, action) => {
+        saveContext({});
+        return {...state, context: {}}
+    },
 
 
     // updateMultipleUsers: (state, action) => {

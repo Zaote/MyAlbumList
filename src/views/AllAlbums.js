@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, BackHandler } from 'react-native';
-import { ListItem, Button, Icon, SearchBar } from '@rneui/base';
+import { View, StyleSheet, FlatList, Image, BackHandler, SafeAreaView } from 'react-native';
+import { ListItem, Button, Icon, SearchBar, Text } from '@rneui/base';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider'
@@ -56,10 +56,11 @@ export default function AlbumList({navigation}) {
           </View>
           <ListItem.Content>
           <View style={styles.albumTextContainer}>
-            <Text style={styles.albumName}>{item.name}</Text>
-            <Text style={styles.albumName}>by {item.artist}</Text>
+            <ListItem.Title style={styles.albumName}>{item.name}</ListItem.Title>
+            <ListItem.Subtitle style={styles.albumName}>by {item.artist}</ListItem.Subtitle>
           </View>
           </ListItem.Content>
+          <Text style={{fontSize:25, margin:5}}>{item.rating === 0 ? '-' : item.rating}</Text>
           <Button
             onPress = {() => navigation.navigate('Album Edit', {album: item})}
             type = 'clear'
@@ -70,7 +71,7 @@ export default function AlbumList({navigation}) {
     );
 
     return (
-        <View style={{paddingBottom: 60}}>
+        <SafeAreaView style={{paddingBottom: 60}}>
             <SearchBar lightTheme round
               placeholder="Search album"
               value={searchValue}
@@ -84,7 +85,7 @@ export default function AlbumList({navigation}) {
                 renderItem = {renderItem}
                 keyExtractor = {(item, index) => `${item.name}_${index}`}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 

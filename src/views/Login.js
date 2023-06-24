@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet, ViewTouchableOpacity, SafeAreaView, TouchableOpacity } from 'react-native';
 import appStyles from '../appStyles';
-import { TouchableOpacity } from 'react-native';
 import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,10 +40,11 @@ export default function Login({ navigation }) {
         setMsg('The password is invalid!');
       }
     }
+    // console.warn(state.context)
   }
 
   return (
-    <View style={appStyles.container}>
+    <SafeAreaView style={appStyles.container}>
       <Text style={appStyles.title}>Login</Text>
       <View style={appStyles.inputContainer}>
         <Input
@@ -52,6 +52,7 @@ export default function Login({ navigation }) {
           placeholder='User'
           value={username}
           onChangeText={val => setUsername(val)}
+          label="Username"
         />
         <Input
           style={appStyles.input}
@@ -59,6 +60,7 @@ export default function Login({ navigation }) {
           value={password}
           secureTextEntry={true}
           onChangeText={val => setPassword(val)}
+          label="Password"
         />
       </View>
       <Button
@@ -71,6 +73,6 @@ export default function Login({ navigation }) {
         <Text style={appStyles.link}>Sign Up</Text>
       </TouchableOpacity>
       <Text>{msg}</Text>
-    </View>
+    </SafeAreaView>
   );
 }

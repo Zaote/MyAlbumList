@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input, Text, Icon } from '@rneui/base';
+import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
+import { Button, Input, Text, Icon, Image, FAB } from '@rneui/base';
 import appStyles from '../appStyles';
 import UsersContext from '../components/UserProvider';
 import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons';
+import StarRating from 'react-native-star-rating-widget';
 
 export default function AlbumEdit({ navigation, route }) {
     const { state, dispatch } = useContext(UsersContext);
@@ -12,6 +13,8 @@ export default function AlbumEdit({ navigation, route }) {
     const [albumName, setAlbumName] = useState(album.name);
     const [albumArtist, setAlbumArtist] = useState(album.artist);
     const [pickedImagePath, setPickedImagePath] = useState('')
+    
+    const [albumRating, setAlbumRating] = useState(0)
 
     useEffect(() => {
       setPickedImagePath(route.params.album.path)
@@ -23,6 +26,7 @@ export default function AlbumEdit({ navigation, route }) {
           path: pickedImagePath,
           name: albumName.trim(),
           artist: albumArtist.trim(),
+          rating: albumRating * 2
         };
         //console.log(updatedAlbum)
         dispatch({
@@ -98,57 +102,88 @@ export default function AlbumEdit({ navigation, route }) {
     }
 
     return (
-        <View style={appStyles.container}>
-        <Text style={[appStyles.title]}>Edit Album</Text>
+        <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+        {/* <Text style={[appStyles.title]}>Edit Album</Text> */}
         {/* <View style={styles.imageContainer}> */}
-        <Icon 
-          color="red" 
-          name="delete" 
-          type="material" 
-          size={40} 
-          onPress={deleteAlbum} 
-        />
-        <View style={styles.imageContainer}>
-            {pickedImagePath !== '' ? 
-            (
-              <TouchableOpacity onPress = {handleImagePress}>
-                <Image source={{ uri: pickedImagePath }} style={styles.image} />
-              </TouchableOpacity>
-            ) : 
-            (
-              <TouchableOpacity onPress = {handleImagePress}>
-                <Image
-                    source={require('../../assets/Default_Album_Artwork.png')}
-                    style={styles.image}
-                />
-              </TouchableOpacity>
-            )}
-        </View>
-        <View style={appStyles.inputContainer}>
-          <Input
-              style={appStyles.input}
-              placeholder="Enter album title"
-              value={albumName}
-              onChangeText={setAlbumName}
+        <ScrollView>
+          <View style={{alignItems: 'center', justifyContent: 'center', paddingTop: 10}}>
+          <Icon 
+            color="red" 
+            name="delete" 
+            type="material" 
+            size={40} 
+            onPress={deleteAlbum} 
           />
-          <Input
-              style={appStyles.input}
-              placeholder="Enter album artist"
-              value={albumArtist}
-              onChangeText={setAlbumArtist}
-          />
-        </View>
-        <Button
+          <View style={styles.imageContainer}>
+              {pickedImagePath !== '' ? 
+              (
+                <TouchableOpacity onPress = {handleImagePress}>
+                  <Image source={{ uri: pickedImagePath }} style={styles.image} />
+                </TouchableOpacity>
+              ) : 
+              (
+                <TouchableOpacity onPress = {handleImagePress}>
+                  <Image
+                      source={require('../../assets/Default_Album_Artwork.png')}
+                      style={styles.image}
+                  />
+                </TouchableOpacity>
+              )}
+          </View>
+            <View style={{justifyContent:"center", alignItems:"center"}}>
+              <StarRating
+                rating={albumRating}
+                onChange={setAlbumRating}
+                starSize={50}
+              />
+              <Icon 
+                color="red"
+                name="close"
+                type="material"
+                size={40}
+                onPress={() => {setAlbumRating(0)}}
+              />
+            </View>
+          <View style={[appStyles.inputContainer, {paddingBottom: 60}]}>
+            <Input
+                style={appStyles.input}
+                placeholder="Enter album title"
+                value={albumName}
+                onChangeText={setAlbumName}
+                label="Title"
+            />
+            <Input
+                style={appStyles.input}
+                placeholder="Enter album artist"
+                value={albumArtist}
+                onChangeText={setAlbumArtist}
+                label="Artist"
+            />
+            {/* <SelectList 
+              setSelected={(val) => setSelected(val)} 
+              data={ratingsToSelect} 
+              save="value"
+            /> */}
+            
+            
+            
+          </View>
+          
+          {/* <TouchableOpacity onPress={()=>{}} style={styles.deleteButton}>
+            <Ionicons name="trash" size={24} color="white" />
+          </TouchableOpacity> */}
+          </View>
+        </ScrollView>
+        <FAB
           title="Save album"
           onPress={saveAlbum}  
           buttonStyle={{ width: 200, height: 50 }}
-          containerStyle={{ margin: 5 }}
+          containerStyle={{ margin: 5, position: 'absolute', bottom: 20}}
+          color="#00AAAA"
+          raised={true}
+          type={'solid'}
         />
-        {/* <TouchableOpacity onPress={()=>{}} style={styles.deleteButton}>
-          <Ionicons name="trash" size={24} color="white" />
-        </TouchableOpacity> */}
-        
-        </View>
+        </SafeAreaView>
     );
 }
 
