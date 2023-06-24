@@ -10,7 +10,7 @@ export default function AlbumList({navigation}) {
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
     
-    //Segunda opção é usar isFocused, onde ele só atualiza quando o usuario mudar pra página AllAlbums, achei essa melhor até o momento
+    //É usado isFocused, onde ele só atualiza quando o usuario mudar pra página AllAlbums, achei essa melhor até o momento
 
     const isFocused = useIsFocused()
 
