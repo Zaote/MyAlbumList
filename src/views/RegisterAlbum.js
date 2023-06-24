@@ -60,6 +60,7 @@ export default function RegisterAlbum({navigation}){
             setPickedImagePath('')
             setAlbumArtist('')
             setAlbumRating(0)
+            console.log(state.context[state.loggedInUser].albumData.albums)
         // } catch (error) {
         //     console.log('Error saving album:', error)
         // }
@@ -166,7 +167,7 @@ export default function RegisterAlbum({navigation}){
                     <Text></Text>
                 <ButtonGroup
                     buttons={[
-                        "none", "Owned", "   Not\nOwned", "   To Be\nObtained"
+                        "none", "Owned", "Not Owned"
                     ]}
                     onPress={ind => {
                         setListeningStatus(ind)

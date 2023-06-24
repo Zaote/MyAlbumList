@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating-widget';
 
-export default function AlbumEdit({ navigation, route }) {
+export default function EditAlbum({ navigation, route }) {
   const { state, dispatch } = useContext(UsersContext);
   const { album } = route.params;
   const [albumName, setAlbumName] = useState(album.name);
@@ -160,7 +160,7 @@ export default function AlbumEdit({ navigation, route }) {
               onPress={ind => {
                 setOwnershipStatus(ind)
               }}
-              selectedIndex={ownershipStatus}
+              selectedIndex={listeningStatus}
               containerStyle={{ height: 50 }}
               bottomStyle={{ height: 50 }}
               label="D"
@@ -168,12 +168,12 @@ export default function AlbumEdit({ navigation, route }) {
             <Text></Text>
             <ButtonGroup
               buttons={[
-                "none", "Owned", "   Not\nOwned", "   To Be\nObtained"
+                "none", "Owned", "Not Owned"
               ]}
               onPress={ind => {
                 setListeningStatus(ind)
               }}
-              selectedIndex={listeningStatus}
+              selectedIndex={ownershipStatus}
               containerStyle={{ height: 50 }}
               bottomStyle={{ height: 50 }}
               label="D"

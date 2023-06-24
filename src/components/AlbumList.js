@@ -3,9 +3,10 @@ import { View, StyleSheet, FlatList, Image, BackHandler, SafeAreaView } from 're
 import { ListItem, Button, Icon, SearchBar, Text } from '@rneui/base';
 import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
-import UsersContext from '../components/UserProvider'
+import UsersContext from './UserProvider';
 
-export default function AlbumList({navigation}) {
+export default function AlbumList(props) {
+    const { navigation } = props
     const { state, dispatch } = useContext(UsersContext);
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
@@ -16,19 +17,19 @@ export default function AlbumList({navigation}) {
 
     useEffect(() => {
         if (isFocused) {
-          setShownAlbums(state.context[state.loggedInUser].albumData.albums)
+            setShownAlbums(props.albumsToShow)
         }
     }, [isFocused]);
     
-    useEffect(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-      return () => backHandler.remove()
-    }, [])
+    // useEffect(() => {
+    //   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+    //   return () => backHandler.remove()
+    // }, [])
 
     function updateSearch(strg){
       if(strg){
-        const searchResult = state.context[state.loggedInUser].albumData.albums.filter((it) => {
-            const titles = it.title ? it.title : ""
+        const searchResult = props.albumsToShow.filter((it) => {
+            const titles = it.name ? it.name : ""
             const artists = it.artist ? it.artist : ""
             return (titles.toUpperCase().includes(strg.toUpperCase())) 
             || (artists.toUpperCase().includes(strg.toUpperCase()))
@@ -36,7 +37,7 @@ export default function AlbumList({navigation}) {
         setShownAlbums(searchResult)
         setSearchValue(strg)
       }else{
-        setShownAlbums([...state.context[state.loggedInUser].albumData.albums])
+        setShownAlbums([...props.albumsToShow])
         setSearchValue(strg)
       }
     }
