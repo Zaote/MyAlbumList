@@ -42,7 +42,8 @@ export default function AlbumList({navigation}) {
     }
 
     const renderItem = ({ item }) => (
-      <ListItem bottomDivider onPress={() => navigation.navigate('Album Information', {album: item})}>
+      <ListItem bottomDivider 
+        onPress={() => navigation.navigate('Album Information', {album: item})}>
         <View style={styles.albumItem}>
           <View style={styles.albumCoverContainer}>
             {item.path !== '' ? (
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   albumItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 1,
   },
   albumCoverContainer: {
     width: 110,
