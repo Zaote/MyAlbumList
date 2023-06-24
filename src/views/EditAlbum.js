@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { Button, Input, Text } from '@rneui/base';
+import { Button, Input, Text, Icon } from '@rneui/base';
 import appStyles from '../appStyles';
 import UsersContext from '../components/UserProvider';
 import * as ImagePicker from 'expo-image-picker'
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AlbumEdit({ navigation, route }) {
     const { state, dispatch } = useContext(UsersContext);
@@ -72,13 +73,41 @@ export default function AlbumEdit({ navigation, route }) {
           },
         ],
         { cancelable: true }
-      );
-    };
+      )
+    }
+
+    const deleteAlbum = () => {
+      Alert.alert(
+        `Are you sure you want to delete this album?`,
+        'This action cannot be undone!',
+        [
+          {
+            text: 'Yes',
+            onPress: () => {
+              dispatch({type: 'deleteAlbum', payload: {albumId: album.id, user: state.loggedInUser}})
+              navigation.goBack()
+            }
+          },
+          {
+            text: 'No',
+            onPress: () => {}
+          },
+        ],
+        { cancelable: true }
+      )
+    }
 
     return (
         <View style={appStyles.container}>
         <Text style={[appStyles.title]}>Edit Album</Text>
         {/* <View style={styles.imageContainer}> */}
+        <Icon 
+          color="red" 
+          name="delete" 
+          type="material" 
+          size={40} 
+          onPress={deleteAlbum} 
+        />
         <View style={styles.imageContainer}>
             {pickedImagePath !== '' ? 
             (
@@ -114,8 +143,11 @@ export default function AlbumEdit({ navigation, route }) {
           onPress={saveAlbum}  
           buttonStyle={{ width: 200, height: 50 }}
           containerStyle={{ margin: 5 }}
-        
         />
+        {/* <TouchableOpacity onPress={()=>{}} style={styles.deleteButton}>
+          <Ionicons name="trash" size={24} color="white" />
+        </TouchableOpacity> */}
+        
         </View>
     );
 }
@@ -136,5 +168,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

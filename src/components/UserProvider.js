@@ -30,12 +30,31 @@ const actions = {
         const username = action.payload.user;
         //console.log(username)
         const updatedContext = { ...state.context};
-        // updatedContext = updatedContext.filter(((item) => item !== user));
         delete updatedContext[username]
-        console.log(updatedContext)
         saveContext(updatedContext);
         return { ...state, context: updatedContext };
-      },
+    },
+    deleteAlbum: (state, action) => {
+        const albumId = action.payload.albumId
+        const username = action.payload.user
+        const updatedAlbums = state.context[username].albumData.albums.filter(
+            al => al.id !== albumId
+        )
+        const updatedAlbumData = {
+            ...state.context[username].albumData,
+            albums: updatedAlbums,
+        };
+        const updatedUser = {
+            ...state.context[username],
+            albumData: updatedAlbumData,
+        };
+        const updatedContext = {
+            ...state.context,
+            [username]: updatedUser,
+        };
+        saveContext(updatedContext);
+        return {...state, context: updatedContext };
+    },
     createUser: (state, action) => {
         const user = action.payload;
         const updatedUsers = {...state.context, ...user};

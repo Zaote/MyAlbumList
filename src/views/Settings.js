@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import appStyles from '../appStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,11 +11,24 @@ export default function Settings({navigation}){
 
     const deleteUser = async () => {
 
-        dispatch({
-            type: 'deleteUser',
-            payload: {user: state.loggedInUser},
-        })
-
+        Alert.alert(
+            `Are you sure you want to delete this account? ${state.loggedInUser}`,
+            'This action cannot be undone!',
+            [
+              {
+                text: 'Yes',
+                onPress: () => {
+                    dispatch({type: 'deleteUser', payload: {user: state.loggedInUser}})
+                    navigation.navigate("Login")
+                }
+              },
+              {
+                text: 'No',
+                onPress: () => {}
+              },
+            ],
+            { cancelable: true }
+        )
     }
 
     return (
