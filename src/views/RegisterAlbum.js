@@ -18,10 +18,10 @@ export default function RegisterAlbum({navigation}){
 
     const saveAlbum = async () => {
         // try {
-            // if (!albumName || !albumArtist) {
-            //     alert("Please enter the album title, artist")
-            //     return
-            // }
+            if (!albumName || !albumArtist) {
+                alert("Please enter the album title, artist")
+                return
+            }
 
             //Carrega os albums já existentes pra não sobrescrever tudo igual tava acontecendo (mongol)
             // const existingAlbums = await AsyncStorage.getItem('albumData')
@@ -194,16 +194,16 @@ export default function RegisterAlbum({navigation}){
                 <Button onPress = {showImagePicker} title = "Select an image" />
                 <Button onPress = {openCamera} title = "Open camera" />
             </View> */}
-            {/* <Button  
+            <Button  
                 title = "Save album"
                 onPress = {saveAlbum}
                 buttonStyle={{ width: 200, height: 50 }}
                 containerStyle={{ margin: 5 }}
-            /> */}
+            />
             
             </View>
             </ScrollView>
-            <FAB
+            {/* <FAB
                 title="Save album"
                 onPress={saveAlbum}
                 buttonStyle={{ width: 200, height: 50 }}
@@ -211,7 +211,7 @@ export default function RegisterAlbum({navigation}){
                 color="#00AAAA"
                 raised={true}
                 type={'solid'}
-            />
+            /> */}
         </SafeAreaView>
     )
 }

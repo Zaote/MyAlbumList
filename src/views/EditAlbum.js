@@ -151,7 +151,8 @@ export default function AlbumEdit({ navigation, route }) {
               onPress={() => { setAlbumRating(0) }}
             />
           </View>
-          <View style={[appStyles.inputContainer, { paddingBottom: 60 }]}>
+          {/* <View style={[appStyles.inputContainer, { paddingBottom: 60 }]}> */}
+          <View style={[appStyles.inputContainer]}>
             <ButtonGroup
               buttons={[
                 "none", "Listened", "To Be Listened",
@@ -197,13 +198,21 @@ export default function AlbumEdit({ navigation, route }) {
               data={ratingsToSelect} 
               save="value"
             /> */}
+            
               
           </View>
           
+          <Button  
+                title = "Save album"
+                onPress = {saveAlbum}
+                buttonStyle={{ width: 200, height: 50 }}
+                containerStyle={{ margin: 5 }}
+            />
+
         </View>
           
       </ScrollView>
-      <FAB
+      {/* <FAB
         title="Save album"
         onPress={saveAlbum}
         buttonStyle={{ width: 200, height: 50 }}
@@ -211,7 +220,7 @@ export default function AlbumEdit({ navigation, route }) {
         color="#00AAAA"
         raised={true}
         type={'solid'}
-      />
+      /> */}
     </SafeAreaView>
   );
 }

@@ -35,6 +35,7 @@ export default function Login({ navigation }) {
         dispatch({ type: 'loginUser', payload: loggedInUser });
         setUsername("")
         setPassword("")
+        setMsg("")
         navigation.navigate('Home');
       } else {
         setMsg('The password is invalid!');
