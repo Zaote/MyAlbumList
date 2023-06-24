@@ -26,12 +26,16 @@ async function loadContext() {
 }
 
 const actions = {
-    // deleteUser: (state, action) => {
-    //     const user = action.payload;
-    //     const updatedUsers = state.users.filter(u => u.id !== user.id);
-    //     saveUsers(updatedUsers);
-    //     return { ...state, users: updatedUsers };
-    // },
+    deleteUser: (state, action) => {
+        const username = action.payload.user;
+        //console.log(username)
+        const updatedContext = { ...state.context};
+        // updatedContext = updatedContext.filter(((item) => item !== user));
+        delete updatedContext[username]
+        console.log(updatedContext)
+        saveContext(updatedContext);
+        return { ...state, context: updatedContext };
+      },
     createUser: (state, action) => {
         const user = action.payload;
         const updatedUsers = {...state.context, ...user};
