@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating-widget';
 
-export default function AlbumEdit({ navigation, route }) {
+export default function EditAlbum({ navigation, route }) {
   const { state, dispatch } = useContext(UsersContext);
   const { album } = route.params;
   const [albumName, setAlbumName] = useState(album.name);
