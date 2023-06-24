@@ -5,22 +5,21 @@ import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from './UserProvider';
 
-export default function AlbumList({navigation}, props) {
+export default function AlbumList(props) {
+    const { navigation } = props
     const { state, dispatch } = useContext(UsersContext);
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
     
     //É usado isFocused, onde ele só atualiza quando o usuario mudar pra página AllAlbums, achei essa melhor até o momento
 
-    // const isFocused = useIsFocused()
+    const isFocused = useIsFocused()
 
     useEffect(() => {
-        // if (isFocused) {
-            console.log("Hello, world!!!")
-            console.log(props.albumsToShow)
+        if (isFocused) {
             setShownAlbums(props.albumsToShow)
-        // }
-    }, [shownAlbums]);
+        }
+    }, [isFocused]);
     
     // useEffect(() => {
     //   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -30,7 +29,7 @@ export default function AlbumList({navigation}, props) {
     function updateSearch(strg){
       if(strg){
         const searchResult = props.albumsToShow.filter((it) => {
-            const titles = it.title ? it.title : ""
+            const titles = it.name ? it.name : ""
             const artists = it.artist ? it.artist : ""
             return (titles.toUpperCase().includes(strg.toUpperCase())) 
             || (artists.toUpperCase().includes(strg.toUpperCase()))

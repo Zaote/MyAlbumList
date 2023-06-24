@@ -159,7 +159,7 @@ export default function EditAlbum({ navigation, route }) {
               onPress={ind => {
                 setOwnershipStatus(ind)
               }}
-              selectedIndex={ownershipStatus}
+              selectedIndex={listeningStatus}
               containerStyle={{ height: 50 }}
               bottomStyle={{ height: 50 }}
               label="D"
@@ -167,12 +167,12 @@ export default function EditAlbum({ navigation, route }) {
             <Text></Text>
             <ButtonGroup
               buttons={[
-                "none", "Owned", "   Not\nOwned", "   To Be\nObtained"
+                "none", "Owned", "Not Owned"
               ]}
               onPress={ind => {
                 setListeningStatus(ind)
               }}
-              selectedIndex={listeningStatus}
+              selectedIndex={ownershipStatus}
               containerStyle={{ height: 50 }}
               bottomStyle={{ height: 50 }}
               label="D"

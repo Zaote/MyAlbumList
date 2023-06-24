@@ -7,12 +7,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { UserProvider } from './src/components/UserProvider';
 import Login from './src/views/Login';
 import SignUp from './src/views/SignUp';
-import AllAlbums from './src/views/AllAlbums';
-import ListenedAlbums from './src/views/ListenedAlbums';
-import ToBeListenedAlbums from './src/views/ToBeListenedAlbums';
+import AllAlbums from './src/views/Lists/AllAlbums';
+import ListenedAlbums from './src/views/Lists/ListenedAlbums';
+import ToBeListenedAlbums from './src/views/Lists/ToBeListenedAlbums';
 import RegisterAlbum from './src/views/RegisterAlbum';
 import Settings from './src/views/Settings';
 import AlbumInformation from './src/views/AlbumInformation';
+import OwnedAlbums from './src/views/Lists/OwnedAlbums';
+import NotOwnedAlbums from './src/views/Lists/NotOwnedAlbums';
 import EditAlbum from './src/views/EditAlbum';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -42,6 +44,8 @@ function Lists({navigation}){
       <ListDrawer.Screen name="All Albums" component={AllAlbums}/>
       <ListDrawer.Screen name="Listened Albums" component={ListenedAlbums}/>
       <ListDrawer.Screen name="To Be Listened Albums" component={ToBeListenedAlbums}/>
+      <ListDrawer.Screen name="Owned Albums" component={OwnedAlbums}/>
+      <ListDrawer.Screen name="Not Owned Albums" component={NotOwnedAlbums}/>
     </ListDrawer.Navigator>
   )
 }
