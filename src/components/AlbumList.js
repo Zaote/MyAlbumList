@@ -5,8 +5,8 @@ import appStyles from '../appStyles';
 import { useIsFocused } from '@react-navigation/native';
 import UsersContext from './UserProvider';
 
-export default function AlbumList(props) {
-    const { navigation } = props
+export default function AlbumList({navigation, albumsToShow}) {
+
     const { state, dispatch } = useContext(UsersContext);
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
@@ -17,7 +17,7 @@ export default function AlbumList(props) {
 
     useEffect(() => {
         if (isFocused) {
-            setShownAlbums(props.albumsToShow)
+            setShownAlbums(albumsToShow)
         }
     }, [isFocused]);
     
@@ -28,7 +28,7 @@ export default function AlbumList(props) {
 
     function updateSearch(strg){
       if(strg){
-        const searchResult = props.albumsToShow.filter((it) => {
+        const searchResult = albumsToShow.filter((it) => {
             const titles = it.name ? it.name : ""
             const artists = it.artist ? it.artist : ""
             return (titles.toUpperCase().includes(strg.toUpperCase())) 
@@ -37,7 +37,7 @@ export default function AlbumList(props) {
         setShownAlbums(searchResult)
         setSearchValue(strg)
       }else{
-        setShownAlbums([...props.albumsToShow])
+        setShownAlbums([...albumsToShow])
         setSearchValue(strg)
       }
     }

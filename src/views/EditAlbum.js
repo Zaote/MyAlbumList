@@ -158,7 +158,7 @@ export default function EditAlbum({ navigation, route }) {
                 "none", "Listened", "To Be Listened",
               ]}
               onPress={ind => {
-                setOwnershipStatus(ind)
+                setListeningStatus(ind)
               }}
               selectedIndex={listeningStatus}
               containerStyle={{ height: 50 }}
@@ -171,7 +171,7 @@ export default function EditAlbum({ navigation, route }) {
                 "none", "Owned", "Not Owned"
               ]}
               onPress={ind => {
-                setListeningStatus(ind)
+                setOwnershipStatus(ind)
               }}
               selectedIndex={ownershipStatus}
               containerStyle={{ height: 50 }}
