@@ -70,7 +70,7 @@ export default function AlbumList({navigation}) {
     );
 
     return (
-        <View>
+        <View style={{paddingBottom: 60}}>
             <SearchBar lightTheme round
               placeholder="Search album"
               value={searchValue}

@@ -34,6 +34,8 @@ export default function Login({ navigation }) {
       if (isCorrectPassword) {
         const loggedInUser = usr;
         dispatch({ type: 'loginUser', payload: loggedInUser });
+        setUsername("")
+        setPassword("")
         navigation.navigate('Home');
       } else {
         setMsg('The password is invalid!');
@@ -48,11 +50,13 @@ export default function Login({ navigation }) {
         <Input
           style={appStyles.input}
           placeholder='User'
+          value={username}
           onChangeText={val => setUsername(val)}
         />
         <Input
           style={appStyles.input}
           placeholder='Password'
+          value={password}
           secureTextEntry={true}
           onChangeText={val => setPassword(val)}
         />

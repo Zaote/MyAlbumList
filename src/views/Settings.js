@@ -8,9 +8,13 @@ export default function Settings({navigation}){
     return (
         <View style={appStyles.container}>
             <Text>Settings</Text>
-            <Button 
+            {/* <Button 
                 title="Reset!!!"
                 onPress={() => {AsyncStorage.clear(), alert("The app data has been reset")}}
+            /> */}
+            <Button 
+                title="Sign Out"
+                onPress={() => {navigation.navigate("Login")}}
             />
         </View>
 
