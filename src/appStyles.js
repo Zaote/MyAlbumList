@@ -8,7 +8,7 @@ export default StyleSheet.create({
       backgroundColor: '#fff',
     },
     title: {
-      fontSize: 50, // Increase the font size
+      fontSize: 50,
       fontWeight: 'bold',
       marginBottom: 50,
     },
@@ -23,7 +23,7 @@ export default StyleSheet.create({
       borderRadius: 5,
       paddingVertical: 8,
       paddingHorizontal: 12,
-      fontSize: 20, // Increase the font size
+      fontSize: 20,
     },
     link: {
       fontSize: 16,

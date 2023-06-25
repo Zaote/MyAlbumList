@@ -184,7 +184,12 @@ export default function SignUp({navigation}){
                 title="Back to Login"
             /> */}
             <View style={appStyles.inputContainer}>
-            
+            <Input
+                errorMessage={errorUsername}
+                label="Username"
+                placeholder="Enter a username"
+                onChangeText={val => {validateUsername(val)}}
+            />
             <Input
                 errorMessage={errorGivenName}
                 label="Given name"
@@ -196,12 +201,6 @@ export default function SignUp({navigation}){
                 label="Family name"
                 placeholder="Enter your family name"
                 onChangeText={val => {validateFamilyName(val)}}
-            />
-            <Input
-                errorMessage={errorUsername}
-                label="Username"
-                placeholder="Enter a username"
-                onChangeText={val => {validateUsername(val)}}
             />
             <Input
                 errorMessage={errorEmail}
