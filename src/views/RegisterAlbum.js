@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
-import { Button, Input, Text, Image, Icon, ButtonGroup, FAB } from '@rneui/base';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
-import appStyles from '../appStyles';
-import UsersContext from '../components/UserProvider';
-import StarRating from 'react-native-star-rating-widget';
+import React, { useState, useContext } from 'react'
+import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native'
+import { Button, Input, Text, Image, Icon, ButtonGroup, FAB } from '@rneui/base'
+import * as ImagePicker from 'expo-image-picker'
+import appStyles from '../appStyles'
+import UsersContext from '../components/UserProvider'
+import StarRating from 'react-native-star-rating-widget'
 
 export default function RegisterAlbum({navigation}){
-    const { state, dispatch } = useContext(UsersContext);
+    const { state, dispatch } = useContext(UsersContext)
     const [pickedImagePath, setPickedImagePath] = useState('')
     const [albumName, setAlbumName] = useState('')
     const [albumArtist, setAlbumArtist] = useState('')
@@ -16,72 +15,49 @@ export default function RegisterAlbum({navigation}){
     const [listeningStatus, setListeningStatus] = useState(0)
     const [ownershipStatus, setOwnershipStatus] = useState(0)
     const [review, setReview] = useState('')
-    const [trackInputs, setTrackInputs] = useState([""]);
+    const [trackInputs, setTrackInputs] = useState([""])
 
     function deleteTrackInput(index){
-        const updatedInputs = [...trackInputs];
-        updatedInputs.splice(index, 1);
-        setTrackInputs(updatedInputs);
+        const updatedInputs = [...trackInputs]
+        updatedInputs.splice(index, 1)
+        setTrackInputs(updatedInputs)
     }
 
     function handleTrackInputs(text, index){
-        const updatedInputs = [...trackInputs];
-        updatedInputs[index] = text;
-        setTrackInputs(updatedInputs);
+        const updatedInputs = [...trackInputs]
+        updatedInputs[index] = text
+        setTrackInputs(updatedInputs)
     }
 
     const saveAlbum = async () => {
-        // try {
-            if (!albumName || !albumArtist) {
-                alert("Please enter the album title, artist")
-                return
-            }
+        if (!albumName || !albumArtist) {
+            alert("Please enter the album title, artist")
+            return
+        }
 
-            //Carrega os albums já existentes pra não sobrescrever tudo igual tava acontecendo (mongol)
-            // const existingAlbums = await AsyncStorage.getItem('albumData')
-            // const allAlbuns = state.context[state.loggedInUser].albumData.albums
+        const newAlbum = {
+            id: Date.now().toString() + parseInt(Math.random() * 10000).toString(),
+            name: albumName.trim(),
+            artist: albumArtist.trim(),
+            path: pickedImagePath,
+            rating: albumRating * 2,
+            listeningStatus: listeningStatus,
+            ownershipStatus: ownershipStatus,
+            review: review,
+            tracks: trackInputs,
+        }
 
-            
-            // let updatedAlbums = []
+        dispatch({
+            type: 'createAlbum',
+            payload: {album: newAlbum, user: state.loggedInUser},
+        })
 
-            // if (allAlbuns) {
-            //     //Caso já existam albums joga eles dentro da updatedALbums
-            //     updatedAlbums = JSON.parse(allAlbuns)
-            // }
-
-            const newAlbum = {
-                id: Date.now().toString() + parseInt(Math.random() * 10000).toString(),
-                name: albumName.trim(),
-                artist: albumArtist.trim(),
-                path: pickedImagePath,
-                rating: albumRating * 2,
-                listeningStatus: listeningStatus,
-                ownershipStatus: ownershipStatus,
-                review: review,
-                tracks: trackInputs,
-            }
-
-            dispatch({
-                type: 'createAlbum',
-                payload: {album: newAlbum, user: state.loggedInUser},
-            })
-
-
-        //     updatedAlbums.push(newAlbum)
-            
-        //     //Salva o updatedAlbums devolta no Async
-        //     await AsyncStorage.setItem('albumData', JSON.stringify(updatedAlbums))
-
-            setAlbumName('')
-            setPickedImagePath('')
-            setAlbumArtist('')
-            setAlbumRating(0)
-            setReview('')
-            setTrackInputs([''])
-            console.log(state.context[state.loggedInUser].albumData.albums)
-        // } catch (error) {
-        //     console.log('Error saving album:', error)
-        // }
+        setAlbumName('')
+        setPickedImagePath('')
+        setAlbumArtist('')
+        setAlbumRating(0)
+        setReview('')
+        setTrackInputs([''])
     }
 
     const showImagePicker = async () => {
@@ -124,8 +100,8 @@ export default function RegisterAlbum({navigation}){
             },
           ],
           { cancelable: true }
-        );
-      };
+        )
+      }
 
     const deletePic = () => {
         Alert.alert(
@@ -153,10 +129,6 @@ export default function RegisterAlbum({navigation}){
             <Text style={[appStyles.title, {marginBottom: 10}]}>Register Album</Text>
             <View style = {appStyles.imageContainerRegister}>
                 {
-                    // pickedImagePath !== '' && <Image
-                    //     source = {{ uri: pickedImagePath }}
-                    //     style = {appStyles.image}
-                    // />
                     pickedImagePath ? 
                         <TouchableOpacity onPress = {handleImagePress}>
                         <Image 
@@ -247,21 +219,18 @@ export default function RegisterAlbum({navigation}){
                     style={{padding: 10, borderWidth: 0.5}}
                     placeholder='You can write a review about this album!'
                 />
-                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}> */}
+               
                 <View>
-                
-                {/* <Text h4>Track List:</Text> */}
 
                 {trackInputs.map((textInput, index) => (
                 <View key={index} style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center' }}>
                     <Input
                     value={textInput}
                     onChangeText={(text) => handleTrackInputs(text, index)}
-                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }} // Adjust the width value here
+                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }}
                     inputContainerStyle={{width: 300, height: 40}}
                     placeholder={`Track #${index + 1}`}
                     />
-                    {/* <Button title="Delete" onPress={() => deleteTrackInput(index)} /> */}
                     <Icon
                         color="red"
                         name="close"
@@ -274,18 +243,12 @@ export default function RegisterAlbum({navigation}){
                 <View style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <Button title="Add Track" onPress={() => setTrackInputs([...trackInputs, ''])} />
                 </View>
-                
-                {/* <Button title="View" onPress={() => console.warn(trackInputs)} /> */}
 
                 </View>
 
 
 
             </View>
-            {/* <View appStyles = {appStyles.buttonContainer}>
-                <Button onPress = {showImagePicker} title = "Select an image" />
-                <Button onPress = {openCamera} title = "Open camera" />
-            </View> */}
             <FAB  
                 title = "Save album"
                 onPress = {saveAlbum}
@@ -296,33 +259,6 @@ export default function RegisterAlbum({navigation}){
             
             </View>
             </ScrollView>
-            {/* <FAB
-                title="Save album"
-                onPress={saveAlbum}
-                buttonStyle={{ width: 200, height: 50 }}
-                containerStyle={{ margin: 5, position: 'absolute', bottom: 20 }}
-                color="#00AAAA"
-                raised={true}
-                type={'solid'}
-            /> */}
         </SafeAreaView>
     )
 }
-
-// const appStyles = StyleSheet.create({
-//     buttonContainer: {
-//         width: 400,
-//         flexDirection: 'row',
-//         justifyContent: 'space-around'
-//     },
-//         imageContainerRegister: {
-//         padding: 20
-//     },
-//     inputEdit: {
-//         height: 40,
-//         borderColor: 'gray',
-//         borderWidth: 1,
-//         marginBottom: 10,
-//         paddingHorizontal: 10,
-//     },
-// });

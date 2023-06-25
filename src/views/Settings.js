@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, Text, Image, Icon, Avatar } from '@rneui/base';
-import * as ImagePicker from 'expo-image-picker';
-import appStyles from '../appStyles';
-import { Ionicons } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
-import UsersContext from '../components/UserProvider';
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
+import { Button, Text, Icon, Avatar } from '@rneui/base'
+import * as ImagePicker from 'expo-image-picker'
+import appStyles from '../appStyles'
+import { Ionicons } from '@expo/vector-icons'
+import { useIsFocused } from '@react-navigation/native'
+import UsersContext from '../components/UserProvider'
 
 export default function Settings({navigation}){
 
@@ -14,17 +14,11 @@ export default function Settings({navigation}){
 
     const isFocused = useIsFocused()
 
-    // useEffect(() => {
-    //     if (isFocused) {
-    //       setPickedImagePath(state.context[state.loggedInUser].profilePic)
-    //     }
-    //   }, [isFocused])
-
     useEffect(() => {
     if (isFocused && state.loggedInUser && state.context[state.loggedInUser]) {
-        setPickedImagePath(state.context[state.loggedInUser].profilePic);
+        setPickedImagePath(state.context[state.loggedInUser].profilePic)
     }
-    }, [isFocused, state.loggedInUser, state.context]);
+    }, [isFocused, state.loggedInUser, state.context])
 
     async function deleteUser(){
 
@@ -51,7 +45,7 @@ export default function Settings({navigation}){
     async function deleteAllAlbums(){
 
         Alert.alert(
-            `Are you sure you want to delete all albums of this account? ${state.loggedInUser}`,
+            'Are you sure you want to delete all albums from this account?',
             'This action cannot be undone!',
             [
               {
@@ -79,7 +73,6 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchImageLibraryAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
-            // console.log(result.assets[0].uri)
             dispatch({
                 type: 'addUserPic',
                 payload: {user: state.loggedInUser, pic: result.assets[0].uri}
@@ -118,8 +111,8 @@ export default function Settings({navigation}){
             },
           ],
           { cancelable: true }
-        );
-      };
+        )
+      }
 
     function deletePic(){
         Alert.alert(
@@ -175,14 +168,12 @@ export default function Settings({navigation}){
                     </View>
                     <Text style = {{ paddingBottom: 10, fontSize: 25 }}>{state.loggedInUser}</Text>                    
                     <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].givenName : ""} {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].familyName : ""}</Text>
-                    {/* <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text> */}
                     <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].email : ""}</Text>
                     <Text style = {{ paddingTop: 5, fontSize: 18 }}>Registered Albums: {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].albumData.albums.length : ""}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"
                             name="log-out"
-                            //type="ionicons"
                             size={40}
                             onPress={() => {navigation.navigate("Login")}}
                         />
@@ -198,15 +189,12 @@ export default function Settings({navigation}){
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
                         />
-                        {/* <Button
-                            title="RESET!!!"
-                            onPress={() => {
-                                dispatch({type: 'clearUsers', payload: {}})
-                                navigation.navigate("Login")
-                            }}
+                        <Button
+                            title="RESET"
+                            onPress={() => dispatch({type: 'clearUsers', payload: {}})}
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
-                        /> */}
+                        />
                     </View>
                 </View>
             </ScrollView>
@@ -214,16 +202,3 @@ export default function Settings({navigation}){
 
     )
 }
-
-// const appStyles = StyleSheet.create({
-//     buttonContainer: {
-//     width: 400,
-//     flexDirection: 'row',
-//     justifyContent: 'space-around'
-//     },
-//     image: {
-//     width: 250,
-//     height: 250,
-//     resizeMode: 'cover'
-//     },
-// });

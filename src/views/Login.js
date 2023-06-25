@@ -1,44 +1,43 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, ViewTouchableOpacity, SafeAreaView, TouchableOpacity } from 'react-native';
-import appStyles from '../appStyles';
-import { Text, Input, Button } from '@rneui/base';
-import UsersContext from '../components/UserProvider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useContext, useEffect } from 'react'
+import { View, SafeAreaView, TouchableOpacity } from 'react-native'
+import appStyles from '../appStyles'
+import { Text, Input, Button } from '@rneui/base'
+import UsersContext from '../components/UserProvider'
 
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcryptjs')
 
 bcrypt.setRandomFallback((len) => {
-    const buf = new Uint8Array(len);
-    return buf.map(() => Math.floor(Math.random() * 256));
-});
+    const buf = new Uint8Array(len)
+    return buf.map(() => Math.floor(Math.random() * 256))
+})
 
 var salt = bcrypt.genSaltSync(10)
 
 export default function Login({ navigation }) {
-  const { state, dispatch } = useContext(UsersContext);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [msg, setMsg] = useState('');
+  const { state, dispatch } = useContext(UsersContext)
+  const [username, setUsername] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [msg, setMsg] = useState('')
 
   async function handleLogin(username, password) {
     const usr = username.trim()
     const pass = password.trim()
     if (!(usr in state.context)) {
-      setMsg(`The user ${usr} does not exist!`);
+      setMsg(`The user ${usr} does not exist!`)
     } else {
       const isCorrectPassword = bcrypt.compareSync(
         pass,
         state.context[usr].password
       )
       if (isCorrectPassword) {
-        const loggedInUser = usr;
-        dispatch({ type: 'loginUser', payload: loggedInUser });
+        const loggedInUser = usr
+        dispatch({ type: 'loginUser', payload: loggedInUser })
         setUsername("")
         setPassword("")
         setMsg("")
-        navigation.navigate('Home');
+        navigation.navigate('Home')
       } else {
-        setMsg('The password is invalid!');
+        setMsg('The password is invalid!')
       }
     }
   }
@@ -74,5 +73,5 @@ export default function Login({ navigation }) {
       </TouchableOpacity>
       <Text>{msg}</Text>
     </SafeAreaView>
-  );
+  )
 }
