@@ -13,7 +13,7 @@ O back-end foi feito utilizando a biblioteca AsyncStorage (@react-native-async-s
 
 O React Navigation (@react-navigation) foi utilizado para implementar a navegação entre as telas 
 
-Foi utilizados vários componentes da biblioteca React Native Elements (@rneui/base) para modelar as interfaces.
+Foram utilizados vários componentes da biblioteca React Native Elements (@rneui/base) para modelar as interfaces.
 
 A biblioteca bcryptjs foi utilizada para gerar a hash das senhas e compará-las.
 
