@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, FlatList, Image, BackHandler, SafeAreaView } from 'react-native';
 import { ListItem, Button, Icon, SearchBar, Text } from '@rneui/base';
 import appStyles from '../appStyles';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import UsersContext from './UserProvider';
 
 export default function AlbumList({navigation, albumsToShow}) {
 
-    const { state, dispatch } = useContext(UsersContext);
+    const { state, dispatch } = useContext(UsersContext)
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
     
@@ -15,16 +15,23 @@ export default function AlbumList({navigation, albumsToShow}) {
 
     const isFocused = useIsFocused()
 
-    useEffect(() => {
-        if (isFocused) {
-            setShownAlbums(albumsToShow)
+    useFocusEffect(
+      React.useCallback(() => {
+        const handleBackPress = () => {
+          return true
         }
-    }, [isFocused]);
-    
-    // useEffect(() => {
-    //   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-    //   return () => backHandler.remove()
-    // }, [])
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+        return () => {
+          backHandler.remove()
+        }
+      }, [])
+    )
+  
+    useEffect(() => {
+      if (isFocused) {
+        setShownAlbums(albumsToShow)
+      }
+    }, [isFocused])
 
     function updateSearch(strg){
       if(strg){
