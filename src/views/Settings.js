@@ -43,6 +43,10 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchImageLibraryAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
+            dispatch({
+                type: 'addUserPic',
+                payload: {user: state.loggedInUser, pic: result.assets[0].uri}
+            })
         }
     } 
     const openCamera = async () => {
@@ -55,6 +59,10 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchCameraAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
+            dispatch({
+                type: 'addUserPic',
+                payload: {user: state.loggedInUser, pic: result.assets[0].uri}
+            })
         }
     }
 
@@ -83,7 +91,9 @@ export default function Settings({navigation}){
             [
                 {
                     text: 'Yes',
-                    onPress: () => {setPickedImagePath('')}
+                    onPress: () => {setPickedImagePath(''), dispatch({
+                                    type: 'addUserPic',
+                                    payload: {user: state.loggedInUser, pic: result.assets[0].uri}})}
                 },
                 {
                     text: 'No',
@@ -95,29 +105,6 @@ export default function Settings({navigation}){
     }
 
     return (
-        // <SafeAreaView style={appStyles.container}>
-        //     <Text>Settings</Text>
-        //     <Button 
-        //         title="Sign Out"
-        //         onPress={() => {navigation.navigate("Login")}}
-        //     />
-        //     <Button
-        //         title="Delete User"
-        //         onPress={deleteUser}
-        //         buttonStyle={{ width: 200, height: 50 }}
-        //         containerStyle={{ margin: 5 }}
-        //     />
-        //     <Button
-        //         title="RESET!!!"
-        //         onPress={() => {
-        //             dispatch({type: 'clearUsers', payload: {}})
-        //             navigation.navigate("Login")
-        //         }}
-        //         buttonStyle={{ width: 200, height: 50 }}
-        //         containerStyle={{ margin: 5 }}
-        //     />
-
-        // </SafeAreaView>
         <SafeAreaView style = {{flex: 1, backgroundColor: 'white'}}>
             <ScrollView>
                 <View style = {{ alignItems: 'center', justifyContent: 'center', paddingTop: 50, paddingBottom: 50}}>
@@ -127,7 +114,7 @@ export default function Settings({navigation}){
                         pickedImagePath ? 
                             <TouchableOpacity onPress = {handleImagePress}>
                             <Image 
-                                source = {{ uri: pickedImagePath }}
+                                source = {{ uri: state.context[state.loggedInUser].profilePic }}
                                 style = {styles.image}
                             />
                             </TouchableOpacity>  
