@@ -41,7 +41,6 @@ export default function Login({ navigation }) {
         setMsg('The password is invalid!');
       }
     }
-    // console.warn(state.context)
   }
 
   return (

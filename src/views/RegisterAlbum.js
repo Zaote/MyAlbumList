@@ -15,6 +15,7 @@ export default function RegisterAlbum({navigation}){
     const [albumRating, setAlbumRating] = useState(0)
     const [listeningStatus, setListeningStatus] = useState(0)
     const [ownershipStatus, setOwnershipStatus] = useState(0)
+    const [review, setReview] = useState('')
 
     const saveAlbum = async () => {
         // try {
@@ -43,6 +44,7 @@ export default function RegisterAlbum({navigation}){
                 rating: albumRating * 2,
                 listeningStatus: listeningStatus,
                 ownershipStatus: ownershipStatus,
+                review: review,
             }
 
             dispatch({
@@ -60,6 +62,7 @@ export default function RegisterAlbum({navigation}){
             setPickedImagePath('')
             setAlbumArtist('')
             setAlbumRating(0)
+            setReview('')
             console.log(state.context[state.loggedInUser].albumData.albums)
         // } catch (error) {
         //     console.log('Error saving album:', error)
@@ -216,6 +219,16 @@ export default function RegisterAlbum({navigation}){
                     placeholder = "Enter album artist"
                     value = {albumArtist}
                     onChangeText = {setAlbumArtist}
+                />
+                <Input
+                    editable
+                    multiline
+                    numberOfLines={5}
+                    maxLength={200}
+                    onChangeText={text => setReview(text)}
+                    value={review}
+                    style={{padding: 10, borderWidth: 1}}
+                    placeholder='You can write a review about this album!'
                 />
             </View>
             {/* <View styles = {styles.buttonContainer}>

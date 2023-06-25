@@ -17,13 +17,29 @@ export default function EditAlbum({ navigation, route }) {
   const [ownershipStatus, setOwnershipStatus] = useState(0)
 
   const [albumRating, setAlbumRating] = useState(0)
+  const [albumReview, setAlbumReview] = useState("")
 
   useEffect(() => {
     setPickedImagePath(route.params.album.path)
     setAlbumRating(route.params.album.rating / 2)
     setListeningStatus(route.params.album.listeningStatus)
     setOwnershipStatus(route.params.album.ownershipStatus)
+    setAlbumReview(route.params.album.review)
   }, [])
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Icon 
+            onPress = {deleteAlbum}
+            name="delete" 
+            color="red" 
+            type="material" 
+            size={30}
+        />
+      ),
+    });
+  }, [navigation]);
 
   const saveAlbum = () => {
     const updatedAlbum = {
@@ -34,6 +50,7 @@ export default function EditAlbum({ navigation, route }) {
       rating: albumRating * 2,
       listeningStatus: listeningStatus,
       ownershipStatus: ownershipStatus,
+      review: albumReview,
     };
     //console.log(updatedAlbum)
     dispatch({
@@ -132,13 +149,13 @@ export default function EditAlbum({ navigation, route }) {
       {/* <View style={styles.imageContainer}> */}
       <ScrollView>
         <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
-          <Icon
+          {/* <Icon
             color="red"
             name="delete"
             type="material"
             size={40}
             onPress={deleteAlbum}
-          />
+          /> */}
           <View style={styles.imageContainer}>
             {pickedImagePath !== '' ?
               (
@@ -220,11 +237,18 @@ export default function EditAlbum({ navigation, route }) {
               onChangeText={setAlbumArtist}
               label="Artist"
             />
-            {/* <SelectList 
-              setSelected={(val) => setSelected(val)} 
-              data={ratingsToSelect} 
-              save="value"
-            /> */}
+            <Input
+              label="Review"
+              editable
+              multiline
+              numberOfLines={5}
+              maxLength={200}
+              onChangeText={text => setReview(text)}
+              value={albumReview}
+              style={{padding: 10, borderWidth: 1}}
+              placeholder='You can write a review about this album!'
+                    
+            />
             
               
           </View>
