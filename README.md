@@ -1,5 +1,6 @@
 # MyAlbumList
 Projeto Final da Disciplina de Tópicos de Programação em Novas Tecnologias
+
 Para executar o projeto basta abrir a pasta do projeto no terminal e executar os seguintes comandos:
 
 * npm install
