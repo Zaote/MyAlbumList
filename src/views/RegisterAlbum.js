@@ -16,6 +16,19 @@ export default function RegisterAlbum({navigation}){
     const [listeningStatus, setListeningStatus] = useState(0)
     const [ownershipStatus, setOwnershipStatus] = useState(0)
     const [review, setReview] = useState('')
+    const [trackInputs, setTrackInputs] = useState([""]);
+
+    function deleteTrackInput(index){
+        const updatedInputs = [...trackInputs];
+        updatedInputs.splice(index, 1);
+        setTrackInputs(updatedInputs);
+    }
+
+    function handleTrackInputs(text, index){
+        const updatedInputs = [...trackInputs];
+        updatedInputs[index] = text;
+        setTrackInputs(updatedInputs);
+    }
 
     const saveAlbum = async () => {
         // try {
@@ -45,6 +58,7 @@ export default function RegisterAlbum({navigation}){
                 listeningStatus: listeningStatus,
                 ownershipStatus: ownershipStatus,
                 review: review,
+                tracks: trackInputs,
             }
 
             dispatch({
@@ -63,6 +77,7 @@ export default function RegisterAlbum({navigation}){
             setAlbumArtist('')
             setAlbumRating(0)
             setReview('')
+            setTrackInputs([''])
             console.log(state.context[state.loggedInUser].albumData.albums)
         // } catch (error) {
         //     console.log('Error saving album:', error)
@@ -213,12 +228,14 @@ export default function RegisterAlbum({navigation}){
                     placeholder = "Enter album title"
                     value = {albumName}
                     onChangeText = {setAlbumName}
+                    label="Title"
                 />
                 <Input
                     style = {appStyles.input}
                     placeholder = "Enter album artist"
                     value = {albumArtist}
                     onChangeText = {setAlbumArtist}
+                    label="Artist"
                 />
                 <Input
                     editable
@@ -227,19 +244,54 @@ export default function RegisterAlbum({navigation}){
                     maxLength={200}
                     onChangeText={text => setReview(text)}
                     value={review}
-                    style={{padding: 10, borderWidth: 1}}
+                    style={{padding: 10, borderWidth: 0.5}}
                     placeholder='You can write a review about this album!'
                 />
+                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}> */}
+                <View>
+                
+                {/* <Text h4>Track List:</Text> */}
+
+                {trackInputs.map((textInput, index) => (
+                <View key={index} style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center' }}>
+                    <Input
+                    value={textInput}
+                    onChangeText={(text) => handleTrackInputs(text, index)}
+                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }} // Adjust the width value here
+                    inputContainerStyle={{width: 300, height: 40}}
+                    placeholder={`Track #${index + 1}`}
+                    />
+                    {/* <Button title="Delete" onPress={() => deleteTrackInput(index)} /> */}
+                    <Icon
+                        color="red"
+                        name="close"
+                        type="material"
+                        size={40}
+                        onPress={() => deleteTrackInput(index)}
+                    />
+                </View>
+                ))}
+                <View style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Button title="Add Track" onPress={() => setTrackInputs([...trackInputs, ''])} />
+                </View>
+                
+                {/* <Button title="View" onPress={() => console.warn(trackInputs)} /> */}
+
+                </View>
+
+
+
             </View>
             {/* <View styles = {styles.buttonContainer}>
                 <Button onPress = {showImagePicker} title = "Select an image" />
                 <Button onPress = {openCamera} title = "Open camera" />
             </View> */}
-            <Button  
+            <FAB  
                 title = "Save album"
                 onPress = {saveAlbum}
                 buttonStyle={{ width: 200, height: 50 }}
                 containerStyle={{ margin: 5 }}
+                color='blue'
             />
             
             </View>
@@ -259,23 +311,24 @@ export default function RegisterAlbum({navigation}){
 
 const styles = StyleSheet.create({
     buttonContainer: {
-    width: 400,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+        width: 400,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     },
-    imageContainer: {
-    padding: 20
+        imageContainer: {
+        padding: 20
     },
     image: {
-    width: 250,
-    height: 250,
-    resizeMode: 'cover'
+        width: 250,
+        height: 250,
+        resizeMode: 'cover',
+        borderWidth: 0.5
     },
     input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
     },
 });

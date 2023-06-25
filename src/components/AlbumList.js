@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     marginRight: 10,
+    borderWidth: 0.5
   },
   albumCover: {
     flex: 1,

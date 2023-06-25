@@ -15,9 +15,9 @@ export default function EditAlbum({ navigation, route }) {
   const [pickedImagePath, setPickedImagePath] = useState('')
   const [listeningStatus, setListeningStatus] = useState(0)
   const [ownershipStatus, setOwnershipStatus] = useState(0)
-
   const [albumRating, setAlbumRating] = useState(0)
   const [albumReview, setAlbumReview] = useState("")
+  const [trackInputs, setTrackInputs] = useState([""])
 
   useEffect(() => {
     setPickedImagePath(route.params.album.path)
@@ -25,6 +25,7 @@ export default function EditAlbum({ navigation, route }) {
     setListeningStatus(route.params.album.listeningStatus)
     setOwnershipStatus(route.params.album.ownershipStatus)
     setAlbumReview(route.params.album.review)
+    setTrackInputs(route.params.album.tracks)
   }, [])
 
   useEffect(() => {
@@ -51,15 +52,31 @@ export default function EditAlbum({ navigation, route }) {
       listeningStatus: listeningStatus,
       ownershipStatus: ownershipStatus,
       review: albumReview,
+      tracks: trackInputs,
     };
     //console.log(updatedAlbum)
     dispatch({
       type: 'updateAlbum',
       payload: { album: updatedAlbum, user: state.loggedInUser },
     });
+    route.params.fromAlbumInfo ? 
+      navigation.navigate('Album Information', {album: updatedAlbum})
+    : 
+      navigation.goBack()
+    
+  }
 
-    navigation.goBack();
-  };
+  function deleteTrackInput(index){
+    const updatedInputs = [...trackInputs];
+    updatedInputs.splice(index, 1);
+    setTrackInputs(updatedInputs);
+}
+
+  function handleTrackInputs(text, index){
+      const updatedInputs = [...trackInputs];
+      updatedInputs[index] = text;
+      setTrackInputs(updatedInputs);
+  }
 
   const showImagePicker = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -243,21 +260,43 @@ export default function EditAlbum({ navigation, route }) {
               multiline
               numberOfLines={5}
               maxLength={200}
-              onChangeText={text => setReview(text)}
+              onChangeText={text => setAlbumReview(text)}
               value={albumReview}
-              style={{padding: 10, borderWidth: 1}}
-              placeholder='You can write a review about this album!'
-                    
+              style={{padding: 10, borderWidth: 0.5}}
+              placeholder='You can write a review about this album!'   
             />
+            {trackInputs.map((textInput, index) => (
+                <View key={index} style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center' }}>
+                    <Input
+                    value={textInput}
+                    onChangeText={(text) => handleTrackInputs(text, index)}
+                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }} // Adjust the width value here
+                    inputContainerStyle={{width: 300, height: 40}}
+                    placeholder={`Track #${index + 1}`}
+                    />
+                    {/* <Button title="Delete" onPress={() => deleteTrackInput(index)} /> */}
+                    <Icon
+                        color="red"
+                        name="close"
+                        type="material"
+                        size={40}
+                        onPress={() => deleteTrackInput(index)}
+                    />
+                </View>
+                ))}
+                <View style={{ paddingLeft: 10,flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Button title="Add Track" onPress={() => setTrackInputs([...trackInputs, ''])} />
+                </View>
             
               
           </View>
           
-          <Button  
+          <FAB
                 title = "Save album"
                 onPress = {saveAlbum}
                 buttonStyle={{ width: 200, height: 50 }}
                 containerStyle={{ margin: 5 }}
+                color='blue'
             />
 
         </View>
@@ -285,6 +324,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     resizeMode: 'cover',
+    borderWidth: 0.5
   },
   input: {
     height: 40,
