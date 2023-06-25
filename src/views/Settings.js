@@ -14,13 +14,19 @@ export default function Settings({navigation}){
 
     const isFocused = useIsFocused()
 
-    useEffect(() => {
-        if (isFocused) {
-          setPickedImagePath(state.context[state.loggedInUser].profilePic)
-        }
-      }, [isFocused])
+    // useEffect(() => {
+    //     if (isFocused) {
+    //       setPickedImagePath(state.context[state.loggedInUser].profilePic)
+    //     }
+    //   }, [isFocused])
 
-    const deleteUser = async () => {
+    useEffect(() => {
+    if (isFocused && state.loggedInUser && state.context[state.loggedInUser]) {
+        setPickedImagePath(state.context[state.loggedInUser].profilePic);
+    }
+    }, [isFocused, state.loggedInUser, state.context]);
+
+    async function deleteUser(){
 
         Alert.alert(
             `Are you sure you want to delete this account? ${state.loggedInUser}`,
@@ -42,7 +48,28 @@ export default function Settings({navigation}){
         )
     }
 
-    const showImagePicker = async () => {
+    async function deleteAllAlbums(){
+
+        Alert.alert(
+            `Are you sure you want to delete all albums of this account? ${state.loggedInUser}`,
+            'This action cannot be undone!',
+            [
+              {
+                text: 'Yes',
+                onPress: () => {
+                    dispatch({type: 'deleteAllAlbums', payload: {user: state.loggedInUser}})
+                }
+              },
+              {
+                text: 'No',
+                onPress: () => {}
+              },
+            ],
+            { cancelable: true }
+        )
+    }
+
+    async function showImagePicker(){
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (permissionResult.granted === false) {
             alert("You've refused to allow this app to access your photos!")
@@ -76,7 +103,7 @@ export default function Settings({navigation}){
         }
     }
 
-    const handleImagePress = () => {
+    function handleImagePress(){
         Alert.alert(
           'Choose an Option',
           'Select an image from the gallery or take a new photo:',
@@ -94,7 +121,7 @@ export default function Settings({navigation}){
         );
       };
 
-    const deletePic = () => {
+    function deletePic(){
         Alert.alert(
             `Delete profile picture?`,
             `This action cannot be undone!`,   
@@ -147,10 +174,10 @@ export default function Settings({navigation}){
                         </View>
                     </View>
                     <Text style = {{ paddingBottom: 10, fontSize: 25 }}>{state.loggedInUser}</Text>                    
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.context[state.loggedInUser].givenName} {state.context[state.loggedInUser].familyName}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].givenName : ""} {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].familyName : ""}</Text>
                     {/* <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text> */}
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.context[state.loggedInUser].email}</Text>
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Registered Albums: {state.context[state.loggedInUser].albumData.albums.length}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].email : ""}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Registered Albums: {state.loggedInUser && state.context[state.loggedInUser] ? state.context[state.loggedInUser].albumData.albums.length : ""}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"
@@ -162,6 +189,12 @@ export default function Settings({navigation}){
                         <Button
                             title="Delete User"
                             onPress={deleteUser}
+                            buttonStyle={{ width: 200, height: 50 }}
+                            containerStyle={{ margin: 5 }}
+                        />
+                        <Button
+                            title="Delete All Albums"
+                            onPress={deleteAllAlbums}
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
                         />

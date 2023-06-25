@@ -55,6 +55,23 @@ const actions = {
         saveContext(updatedContext);
         return {...state, context: updatedContext };
     },
+    deleteAllAlbums: (state, action) => {
+        const username = action.payload.user
+        const updatedAlbumData = {
+            ...state.context[username].albumData,
+            albums: [],
+        }
+        const updatedUser = {
+            ...state.context[username],
+            albumData: updatedAlbumData,
+        }
+        const updatedContext = {
+            ...state.context,
+            [username]: updatedUser,
+        }
+        saveContext(updatedContext);
+        return {...state, context: updatedContext };
+    },
     createUser: (state, action) => {
         const user = action.payload;
         const updatedUsers = {...state.context, ...user};
