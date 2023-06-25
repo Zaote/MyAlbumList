@@ -62,6 +62,22 @@ const actions = {
         //console.warn(updatedUsers)
         return { ...state, context: updatedUsers };
     },
+    addUserPic: (state, action) => {
+        const username = action.payload.user
+        const picture = action.payload.pic
+        const updatedProfile = {
+            ...state.context[username],
+            profilePic: picture,
+        }
+        const updatedUser = {
+            ...state.context,
+            [username]: updatedProfile,
+        }
+        // console.log(updatedProfile)
+        // console.log(updatedUser)
+        saveContext(updatedUser)
+        return { ...state, context: updatedUser}
+    },
     // updateUser: (state, action) => {
     //     const updated = action.payload;
     //     const updatedUsers = state.users.map(u => u.id === updated.id ? updated : u);

@@ -1,15 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Input, Text, Image, Icon } from '@rneui/base';
 import * as ImagePicker from 'expo-image-picker';
 import appStyles from '../appStyles';
 import { Ionicons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider';
 
 export default function Settings({navigation}){
 
     const { state, dispatch } = useContext(UsersContext)
-    const [pickedImagePath, setPickedImagePath] = useState('')
+    const [pickedImagePath, setPickedImagePath] = useState(null)
+
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        if (isFocused) {
+          setPickedImagePath(state.context[state.loggedInUser].profilePic)
+        }
+      }, [isFocused])
 
     const deleteUser = async () => {
 
@@ -43,6 +52,11 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchImageLibraryAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
+            // console.log(result.assets[0].uri)
+            dispatch({
+                type: 'addUserPic',
+                payload: {user: state.loggedInUser, pic: result.assets[0].uri}
+            })
         }
     } 
     const openCamera = async () => {
@@ -55,6 +69,10 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchCameraAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
+            dispatch({
+                type: 'addUserPic',
+                payload: {user: state.loggedInUser, pic: result.assets[0].uri}
+            })
         }
     }
 
@@ -83,7 +101,9 @@ export default function Settings({navigation}){
             [
                 {
                     text: 'Yes',
-                    onPress: () => {setPickedImagePath('')}
+                    onPress: () => {setPickedImagePath(''), dispatch({
+                                    type: 'addUserPic',
+                                    payload: {user: state.loggedInUser, pic: null}})}
                 },
                 {
                     text: 'No',
@@ -95,29 +115,6 @@ export default function Settings({navigation}){
     }
 
     return (
-        // <SafeAreaView style={appStyles.container}>
-        //     <Text>Settings</Text>
-        //     <Button 
-        //         title="Sign Out"
-        //         onPress={() => {navigation.navigate("Login")}}
-        //     />
-        //     <Button
-        //         title="Delete User"
-        //         onPress={deleteUser}
-        //         buttonStyle={{ width: 200, height: 50 }}
-        //         containerStyle={{ margin: 5 }}
-        //     />
-        //     <Button
-        //         title="RESET!!!"
-        //         onPress={() => {
-        //             dispatch({type: 'clearUsers', payload: {}})
-        //             navigation.navigate("Login")
-        //         }}
-        //         buttonStyle={{ width: 200, height: 50 }}
-        //         containerStyle={{ margin: 5 }}
-        //     />
-
-        // </SafeAreaView>
         <SafeAreaView style = {{flex: 1, backgroundColor: 'white'}}>
             <ScrollView>
                 <View style = {{ alignItems: 'center', justifyContent: 'center', paddingTop: 50, paddingBottom: 50}}>
@@ -150,9 +147,9 @@ export default function Settings({navigation}){
                         </View>
                     </View>
                     <Text style = {{ paddingBottom: 10, fontSize: 25 }}>{state.loggedInUser}</Text>                    
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Given Name: {state.context[state.loggedInUser].givenName}</Text>
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text>
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Email : {state.context[state.loggedInUser].email}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.context[state.loggedInUser].givenName} {state.context[state.loggedInUser].familyName}</Text>
+                    {/* <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text> */}
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.context[state.loggedInUser].email}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"

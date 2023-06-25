@@ -168,7 +168,7 @@ export default function SignUp({navigation}){
                 payload: newUser,
             })
             navigation.navigate("Login")
-            console.warn(state.context)
+            // console.warn(state.context)
         }
     }
 
