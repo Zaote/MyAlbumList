@@ -1,16 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { View, SafeAreaView, ScrollView } from 'react-native';
 import appStyles from '../appStyles';
-import { Text, Image, SpeedDial, Icon, Card } from '@rneui/base';
-import UsersContext from '../components/UserProvider';
+import { Text, Image, Icon, Card } from '@rneui/base';
 import StarRating from 'react-native-star-rating-widget';
 
 export default function AlbumInformation({ navigation, route }) {
-  const { state, dispatch } = useContext(UsersContext);
-  // const { album } = route.params;
   const [album, setAlbum] = useState(route.params.album)
   const [albumRating, setAlbumRating] = useState(0);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setAlbumRating(route.params.album.rating / 2);
@@ -18,7 +14,6 @@ export default function AlbumInformation({ navigation, route }) {
   
   useEffect(() => {
     setAlbum(route.params.album)
-    // console.log(album)
     setAlbumRating(route.params.album.rating / 2);
   }, [route.params.album]);
 
@@ -77,12 +72,6 @@ export default function AlbumInformation({ navigation, route }) {
             false
         }
 
-
-        {/* <Text style={[appStyles.title, {alignItems: 'flex-start'}]}>Tracks:</Text>
-        {album.tracks.map((textInput, index) => (
-          <Text key={index} style={appStyles.artist}>Track #{index}</Text>
-        ))} */}
-
         <Card containerStyle={{width: 300}}>
           <Card.Title style={appStyles.cardTitle}>Tracks</Card.Title>
           <Card.Divider />
@@ -90,8 +79,6 @@ export default function AlbumInformation({ navigation, route }) {
           <Text key={index} style={appStyles.status}>{text}</Text>
         ))}
         </Card>
-        {/* {console.log(route.params.album)} */}
-
         <Card containerStyle={{width: 300, height: 230}}>
           <Card.Title style={appStyles.cardTitle}>Review</Card.Title>
           <Card.Divider />
@@ -111,40 +98,3 @@ export default function AlbumInformation({ navigation, route }) {
     
   );
 }
-
-// const appStyles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "white"
-//   },
-//   imageContainer: {
-//     padding: 30,
-//     marginBottom: 15,
-//     alignItems: 'center',
-//   },
-//   image: {
-//     width: 250,
-//     height: 250,
-//     resizeMode: 'cover',
-//     borderWidth: 0.5,
-//   },
-//   title: {
-//     fontSize: 26,
-//     fontWeight: 'bold',
-//     marginTop: 10,
-//     marginBottom: 5,
-//   },
-//   artist: {
-//     fontSize: 21,
-//     marginBottom: 20,
-//   },
-//   status: {
-//     marginBottom: 10,
-//     fontSize: 18
-//   },
-//   cardTitle: {
-//     marginBottom: 10,
-//     marginTop: -10,
-//     fontSize: 20,
-//   }
-// });

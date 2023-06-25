@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, ViewTouchableOpacity, SafeAreaView, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import appStyles from '../appStyles';
 import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var bcrypt = require('bcryptjs');
 
@@ -11,8 +10,6 @@ bcrypt.setRandomFallback((len) => {
     const buf = new Uint8Array(len);
     return buf.map(() => Math.floor(Math.random() * 256));
 });
-
-var salt = bcrypt.genSaltSync(10)
 
 export default function Login({ navigation }) {
   const { state, dispatch } = useContext(UsersContext);

@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
 import { Button, Input, Text, Icon, Image, FAB, ButtonGroup } from '@rneui/base';
 import appStyles from '../appStyles';
 import UsersContext from '../components/UserProvider';
 import * as ImagePicker from 'expo-image-picker'
-import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating-widget';
 
 export default function EditAlbum({ navigation, route }) {
@@ -54,13 +53,10 @@ export default function EditAlbum({ navigation, route }) {
       review: albumReview,
       tracks: trackInputs,
     };
-    // console.log(trackInputs)
     dispatch({
       type: 'updateAlbum',
       payload: { album: updatedAlbum, user: state.loggedInUser },
     });
-    // console.log(updatedAlbum)
-    // console.log(route.params.fromAlbumInfo)
     route.params.fromAlbumInfo ? 
       navigation.navigate('Album Information', {album: updatedAlbum})
     : 
@@ -164,17 +160,8 @@ export default function EditAlbum({ navigation, route }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      {/* <Text style={[appStyles.title]}>Edit Album</Text> */}
-      {/* <View style={appStyles.imageContainer}> */}
       <ScrollView>
         <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
-          {/* <Icon
-            color="red"
-            name="delete"
-            type="material"
-            size={40}
-            onPress={deleteAlbum}
-          /> */}
           <View style={appStyles.imageContainer}>
             {pickedImagePath !== '' ?
               (
@@ -214,7 +201,6 @@ export default function EditAlbum({ navigation, route }) {
               onPress={() => { setAlbumRating(0) }}
             />
           </View>
-          {/* <View style={[appStyles.inputContainer, { paddingBottom: 60 }]}> */}
           <View style={[appStyles.inputContainer]}>
             <ButtonGroup
               buttons={[
@@ -272,11 +258,10 @@ export default function EditAlbum({ navigation, route }) {
                     <Input
                     value={textInput}
                     onChangeText={(text) => handleTrackInputs(text, index)}
-                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }} // Adjust the width value here
+                    containerStyle={{ borderWidth: 0.5, marginVertical: 5, width: 310, height: 40 }}
                     inputContainerStyle={{width: 300, height: 40}}
                     placeholder={`Track #${index + 1}`}
                     />
-                    {/* <Button title="Delete" onPress={() => deleteTrackInput(index)} /> */}
                     <Icon
                         color="red"
                         name="close"
@@ -304,43 +289,6 @@ export default function EditAlbum({ navigation, route }) {
         </View>
           
       </ScrollView>
-      {/* <FAB
-        title="Save album"
-        onPress={saveAlbum}
-        buttonStyle={{ width: 200, height: 50 }}
-        containerStyle={{ margin: 5, position: 'absolute', bottom: 20 }}
-        color="#00AAAA"
-        raised={true}
-        type={'solid'}
-      /> */}
     </SafeAreaView>
   );
 }
-
-// const appStyles = StyleSheet.create({
-//   imageContainer: {
-//     padding: 30,
-//     marginBottom: 15
-//   },
-//   image: {
-//     width: 250,
-//     height: 250,
-//     resizeMode: 'cover',
-//     borderWidth: 0.5
-//   },
-//   inputEdit: {
-//     height: 40,
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//     marginBottom: 10,
-//     paddingHorizontal: 10,
-//   },
-//   deleteButton: {
-//     backgroundColor: 'red',
-//     width: 50,
-//     height: 50,
-//     borderRadius: 25,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// });

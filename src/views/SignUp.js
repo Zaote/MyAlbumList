@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import appStyles from '../appStyles';
 import { Text, Input, Button } from '@rneui/base';
 import UsersContext from '../components/UserProvider';
@@ -168,7 +167,6 @@ export default function SignUp({navigation}){
                 payload: newUser,
             })
             navigation.navigate("Login")
-            // console.warn(state.context)
         }
     }
 
@@ -176,13 +174,6 @@ export default function SignUp({navigation}){
     return (
         <SafeAreaView style={appStyles.container}>
             <Text style={appStyles.title}>Sign Up</Text>
-            
-            {/* <Button
-                buttonStyle={{ width: 200 }}
-                containerStyle={{ margin: 5 }}
-                onPress={() => navigation.navigate("Login")}
-                title="Back to Login"
-            /> */}
             <View style={appStyles.inputContainer}>
             <Input
                 errorMessage={errorUsername}
