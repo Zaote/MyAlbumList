@@ -54,11 +54,13 @@ export default function EditAlbum({ navigation, route }) {
       review: albumReview,
       tracks: trackInputs,
     };
-    //console.log(updatedAlbum)
+    // console.log(trackInputs)
     dispatch({
       type: 'updateAlbum',
       payload: { album: updatedAlbum, user: state.loggedInUser },
     });
+    // console.log(updatedAlbum)
+    // console.log(route.params.fromAlbumInfo)
     route.params.fromAlbumInfo ? 
       navigation.navigate('Album Information', {album: updatedAlbum})
     : 
@@ -130,7 +132,7 @@ export default function EditAlbum({ navigation, route }) {
           text: 'Yes',
           onPress: () => {
             dispatch({ type: 'deleteAlbum', payload: { albumId: album.id, user: state.loggedInUser } })
-            navigation.goBack()
+            navigation.navigate('All Albums')
           }
         },
         {

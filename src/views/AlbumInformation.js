@@ -18,9 +18,11 @@ export default function AlbumInformation({ navigation, route }) {
   
   useEffect(() => {
     setAlbum(route.params.album)
+    // console.log(album)
     setAlbumRating(route.params.album.rating / 2);
   }, [route.params.album]);
 
+  console.log(album)
 
   useEffect(() => {
     navigation.setOptions({
@@ -34,7 +36,7 @@ export default function AlbumInformation({ navigation, route }) {
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, album]);
 
   let listened = '';
   if (album.listeningStatus === 1) {
@@ -88,7 +90,7 @@ export default function AlbumInformation({ navigation, route }) {
           <Text key={index} style={styles.status}>{text}</Text>
         ))}
         </Card>
-
+        {/* {console.log(route.params.album)} */}
 
         <Card containerStyle={{width: 300, height: 230}}>
           <Card.Title style={styles.cardTitle}>Review</Card.Title>

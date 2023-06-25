@@ -31,5 +31,30 @@ export default StyleSheet.create({
       textDecorationLine: 'underline',
       color: '#007BFF',
     },
+    albumItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 1,
+    },
+    albumCoverContainer: {
+      width: 110,
+      height: 110,
+      marginRight: 10,
+      borderWidth: 0.5
+    },
+    albumCover: {
+      flex: 1,
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+    },
+    albumTextContainer: {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
+    albumName: {
+      fontSize: 21,
+    },
   });
   
