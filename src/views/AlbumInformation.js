@@ -53,19 +53,19 @@ export default function AlbumInformation({ navigation, route }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={appStyles.container}>
       <ScrollView>
-      <View style={styles.imageContainer}>
+      <View style={appStyles.imageContainer}>
         {album.path !== '' ? (
-          <Image source={{ uri: album.path }} style={styles.image} />
+          <Image source={{ uri: album.path }} style={appStyles.image} />
         ) : (
           <Image
             source={require('../../assets/Default_Album_Artwork.png')}
-            style={styles.image}
+            style={appStyles.image}
           />
         )}
-        <Text style={styles.title}>{album.name}</Text>
-        <Text style={styles.artist}>Artist: {album.artist}</Text>
+        <Text style={appStyles.title}>{album.name}</Text>
+        <Text style={appStyles.artist}>Artist: {album.artist}</Text>
         {albumRating !== 0 
         ? 
             <StarRating
@@ -78,31 +78,31 @@ export default function AlbumInformation({ navigation, route }) {
         }
 
 
-        {/* <Text style={[styles.title, {alignItems: 'flex-start'}]}>Tracks:</Text>
+        {/* <Text style={[appStyles.title, {alignItems: 'flex-start'}]}>Tracks:</Text>
         {album.tracks.map((textInput, index) => (
-          <Text key={index} style={styles.artist}>Track #{index}</Text>
+          <Text key={index} style={appStyles.artist}>Track #{index}</Text>
         ))} */}
 
         <Card containerStyle={{width: 300}}>
-          <Card.Title style={styles.cardTitle}>Tracks</Card.Title>
+          <Card.Title style={appStyles.cardTitle}>Tracks</Card.Title>
           <Card.Divider />
           {album.tracks.map((text, index) => (
-          <Text key={index} style={styles.status}>{text}</Text>
+          <Text key={index} style={appStyles.status}>{text}</Text>
         ))}
         </Card>
         {/* {console.log(route.params.album)} */}
 
         <Card containerStyle={{width: 300, height: 230}}>
-          <Card.Title style={styles.cardTitle}>Review</Card.Title>
+          <Card.Title style={appStyles.cardTitle}>Review</Card.Title>
           <Card.Divider />
-          <Text style={styles.status}>{album.review}</Text>
+          <Text style={appStyles.status}>{album.review}</Text>
         </Card>
         
 
 
         <View style={{justifyContent: "flex-start", marginTop:30}}>
-            <Text style={styles.status}>{listened}</Text>
-            <Text style={styles.status}>{owned}</Text>
+            <Text style={appStyles.status}>{listened}</Text>
+            <Text style={appStyles.status}>{owned}</Text>
         </View>
         
       </View>
@@ -112,39 +112,39 @@ export default function AlbumInformation({ navigation, route }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white"
-  },
-  imageContainer: {
-    padding: 30,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  image: {
-    width: 250,
-    height: 250,
-    resizeMode: 'cover',
-    borderWidth: 0.5,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 5,
-  },
-  artist: {
-    fontSize: 21,
-    marginBottom: 20,
-  },
-  status: {
-    marginBottom: 10,
-    fontSize: 18
-  },
-  cardTitle: {
-    marginBottom: 10,
-    marginTop: -10,
-    fontSize: 20,
-  }
-});
+// const appStyles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "white"
+//   },
+//   imageContainer: {
+//     padding: 30,
+//     marginBottom: 15,
+//     alignItems: 'center',
+//   },
+//   image: {
+//     width: 250,
+//     height: 250,
+//     resizeMode: 'cover',
+//     borderWidth: 0.5,
+//   },
+//   title: {
+//     fontSize: 26,
+//     fontWeight: 'bold',
+//     marginTop: 10,
+//     marginBottom: 5,
+//   },
+//   artist: {
+//     fontSize: 21,
+//     marginBottom: 20,
+//   },
+//   status: {
+//     marginBottom: 10,
+//     fontSize: 18
+//   },
+//   cardTitle: {
+//     marginBottom: 10,
+//     marginTop: -10,
+//     fontSize: 20,
+//   }
+// });

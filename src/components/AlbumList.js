@@ -52,21 +52,21 @@ export default function AlbumList({navigation, albumsToShow}) {
     const renderItem = ({ item }) => (
       <ListItem bottomDivider 
         onPress={() => navigation.navigate('Album Information', {album: item})}>
-        <View style={styles.albumItem}>
-          <View style={styles.albumCoverContainer}>
+        <View style={appStyles.albumItem}>
+          <View style={appStyles.albumCoverContainer}>
             {item.path !== '' ? (
-              <Image source={{ uri: item.path }} style={styles.albumCover} />
+              <Image source={{ uri: item.path }} style={appStyles.albumCover} />
             ) : (
               <Image
                 source={require('../../assets/Default_Album_Artwork.png')}
-                style={styles.albumCover}
+                style={appStyles.albumCover}
               />
             )}
           </View>
           <ListItem.Content>
-          <View style={styles.albumTextContainer}>
-            <ListItem.Title style={styles.albumName}>{item.name}</ListItem.Title>
-            <ListItem.Subtitle style={styles.albumName}>by {item.artist}</ListItem.Subtitle>
+          <View style={appStyles.albumTextContainer}>
+            <ListItem.Title style={appStyles.albumName}>{item.name}</ListItem.Title>
+            <ListItem.Subtitle style={appStyles.albumArtist}>by {item.artist}</ListItem.Subtitle>
           </View>
           </ListItem.Content>
           <Text style={{fontSize:25, margin:5}}>{item.rating === 0 ? '-' : item.rating}</Text>
@@ -90,7 +90,8 @@ export default function AlbumList({navigation, albumsToShow}) {
               inputContainerStyle={{backgroundColor: '#EEEEEE'}}
             />
             <FlatList
-                data = {shownAlbums}
+                // data = {shownAlbums.sort(() => it )}
+                data = {shownAlbums.sort((X, Y) => X.name.localeCompare(Y.name))}
                 renderItem = {renderItem}
                 keyExtractor = {(item, index) => `${item.name}_${index}`}
             />
@@ -98,30 +99,30 @@ export default function AlbumList({navigation, albumsToShow}) {
     )
 }
 
-const styles = StyleSheet.create({
-  albumItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 1,
-  },
-  albumCoverContainer: {
-    width: 110,
-    height: 110,
-    marginRight: 10,
-    borderWidth: 0.5
-  },
-  albumCover: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  albumTextContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  albumName: {
-    fontSize: 21,
-  },
-});
+// const appStyles = StyleSheet.create({
+//   albumItem: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     marginBottom: 1,
+//   },
+//   albumCoverContainer: {
+//     width: 110,
+//     height: 110,
+//     marginRight: 10,
+//     borderWidth: 0.5
+//   },
+//   albumCover: {
+//     flex: 1,
+//     width: '100%',
+//     height: '100%',
+//     resizeMode: 'cover',
+//   },
+//   albumTextContainer: {
+//     flex: 1,
+//     flexDirection: 'column',
+//     justifyContent: 'center',
+//   },
+//   albumName: {
+//     fontSize: 21,
+//   },
+// });

@@ -151,24 +151,24 @@ export default function RegisterAlbum({navigation}){
             <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 50, paddingBottom: 50 }}>
 
             <Text style={[appStyles.title, {marginBottom: 10}]}>Register Album</Text>
-            <View style = {styles.imageContainer}>
+            <View style = {appStyles.imageContainerRegister}>
                 {
                     // pickedImagePath !== '' && <Image
                     //     source = {{ uri: pickedImagePath }}
-                    //     style = {styles.image}
+                    //     style = {appStyles.image}
                     // />
                     pickedImagePath ? 
                         <TouchableOpacity onPress = {handleImagePress}>
                         <Image 
                             source = {{ uri: pickedImagePath }}
-                            style = {styles.image}
+                            style = {appStyles.image}
                         />
                         </TouchableOpacity>  
                     : 
                         <TouchableOpacity onPress = {handleImagePress}>
                         <Image                  
                             source = {require('../../assets/Default_Album_Artwork.png')}
-                            style = {styles.image}
+                            style = {appStyles.image}
                         />
                         </TouchableOpacity>                     
                 }
@@ -199,7 +199,7 @@ export default function RegisterAlbum({navigation}){
             <View style={appStyles.inputContainer}>
                 <ButtonGroup
                     buttons={[
-                        "none", "Listened", "To Be Listened",
+                        "Unclassified", "Listened", "To Be Listened",
                     ]}
                     onPress={ind => {
                         setOwnershipStatus(ind)
@@ -212,7 +212,7 @@ export default function RegisterAlbum({navigation}){
                     <Text></Text>
                 <ButtonGroup
                     buttons={[
-                        "none", "Owned", "Not Owned"
+                        "Unclassified", "Owned", "Not Owned"
                     ]}
                     onPress={ind => {
                         setListeningStatus(ind)
@@ -224,14 +224,14 @@ export default function RegisterAlbum({navigation}){
                 />
                 <Text></Text>
                 <Input
-                    style = {appStyles.input}
+                    style = {appStyles.inputEdit}
                     placeholder = "Enter album title"
                     value = {albumName}
                     onChangeText = {setAlbumName}
                     label="Title"
                 />
                 <Input
-                    style = {appStyles.input}
+                    style = {appStyles.inputEdit}
                     placeholder = "Enter album artist"
                     value = {albumArtist}
                     onChangeText = {setAlbumArtist}
@@ -282,7 +282,7 @@ export default function RegisterAlbum({navigation}){
 
 
             </View>
-            {/* <View styles = {styles.buttonContainer}>
+            {/* <View appStyles = {appStyles.buttonContainer}>
                 <Button onPress = {showImagePicker} title = "Select an image" />
                 <Button onPress = {openCamera} title = "Open camera" />
             </View> */}
@@ -309,26 +309,20 @@ export default function RegisterAlbum({navigation}){
     )
 }
 
-const styles = StyleSheet.create({
-    buttonContainer: {
-        width: 400,
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-        imageContainer: {
-        padding: 20
-    },
-    image: {
-        width: 250,
-        height: 250,
-        resizeMode: 'cover',
-        borderWidth: 0.5
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 10,
-        paddingHorizontal: 10,
-    },
-});
+// const appStyles = StyleSheet.create({
+//     buttonContainer: {
+//         width: 400,
+//         flexDirection: 'row',
+//         justifyContent: 'space-around'
+//     },
+//         imageContainerRegister: {
+//         padding: 20
+//     },
+//     inputEdit: {
+//         height: 40,
+//         borderColor: 'gray',
+//         borderWidth: 1,
+//         marginBottom: 10,
+//         paddingHorizontal: 10,
+//     },
+// });

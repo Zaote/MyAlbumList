@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, Input, Text, Image, Icon } from '@rneui/base';
+import { View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { Button, Text, Image, Icon, Avatar } from '@rneui/base';
 import * as ImagePicker from 'expo-image-picker';
 import appStyles from '../appStyles';
 import { Ionicons } from '@expo/vector-icons';
@@ -119,20 +119,20 @@ export default function Settings({navigation}){
             <ScrollView>
                 <View style = {{ alignItems: 'center', justifyContent: 'center', paddingTop: 50, paddingBottom: 50}}>
                     <Text style={[appStyles.title, {marginBottom: 10}]}>Profile</Text>
-                    <View style = {styles.imageContainer}>
+                    <View style = {appStyles.imageContainerRegister}>
                     {
                         pickedImagePath ? 
                             <TouchableOpacity onPress = {handleImagePress}>
-                            <Image 
+                            <Avatar rounded
                                 source = {{ uri: pickedImagePath }}
-                                style = {styles.image}
+                                style = {appStyles.imageAvatar}
                             />
                             </TouchableOpacity>  
                         : 
                             <TouchableOpacity onPress = {handleImagePress}>
-                            <Image                  
+                            <Avatar rounded                 
                                 source = {require('../../assets/Default_User_Artwork.png')}
-                                style = {styles.image}
+                                style = {appStyles.imageAvatar}
                             />
                             </TouchableOpacity>                     
                     }
@@ -150,6 +150,7 @@ export default function Settings({navigation}){
                     <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.context[state.loggedInUser].givenName} {state.context[state.loggedInUser].familyName}</Text>
                     {/* <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text> */}
                     <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.context[state.loggedInUser].email}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Registered Albums: {state.context[state.loggedInUser].albumData.albums.length}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"
@@ -164,7 +165,7 @@ export default function Settings({navigation}){
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
                         />
-                        <Button
+                        {/* <Button
                             title="RESET!!!"
                             onPress={() => {
                                 dispatch({type: 'clearUsers', payload: {}})
@@ -172,7 +173,7 @@ export default function Settings({navigation}){
                             }}
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
-                        />
+                        /> */}
                     </View>
                 </View>
             </ScrollView>
@@ -181,25 +182,15 @@ export default function Settings({navigation}){
     )
 }
 
-const styles = StyleSheet.create({
-    buttonContainer: {
-    width: 400,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-    },
-    imageContainer: {
-    padding: 20
-    },
-    image: {
-    width: 250,
-    height: 250,
-    resizeMode: 'cover'
-    },
-    input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    },
-});
+// const appStyles = StyleSheet.create({
+//     buttonContainer: {
+//     width: 400,
+//     flexDirection: 'row',
+//     justifyContent: 'space-around'
+//     },
+//     image: {
+//     width: 250,
+//     height: 250,
+//     resizeMode: 'cover'
+//     },
+// });

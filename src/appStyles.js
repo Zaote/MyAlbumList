@@ -56,5 +56,66 @@ export default StyleSheet.create({
     albumName: {
       fontSize: 21,
     },
+    albumArtist: {
+      fontSize: 18
+    },
+    imageContainer: {
+      padding: 30,
+      marginBottom: 15,
+      alignItems: 'center',
+    },
+    image: {
+      width: 250,
+      height: 250,
+      resizeMode: 'cover',
+      borderWidth: 0.5,
+    },
+    imageAvatar: {
+      width: 250,
+      height: 250,
+      resizeMode: 'cover',
+    },
+    title: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      marginTop: 10,
+      marginBottom: 5,
+    },
+    artist: {
+      fontSize: 21,
+      marginBottom: 20,
+    },
+    status: {
+      marginBottom: 10,
+      fontSize: 18
+    },
+    cardTitle: {
+      marginBottom: 10,
+      marginTop: -10,
+      fontSize: 20,
+    },
+    inputEdit: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+    },
+    deleteButton: {
+      backgroundColor: 'red',
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonContainer: {
+      width: 400,
+      flexDirection: 'row',
+      justifyContent: 'space-around'
+    },
+      imageContainerRegister: {
+      padding: 20
+    },
   });
   

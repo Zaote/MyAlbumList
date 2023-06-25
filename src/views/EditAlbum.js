@@ -165,7 +165,7 @@ export default function EditAlbum({ navigation, route }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       {/* <Text style={[appStyles.title]}>Edit Album</Text> */}
-      {/* <View style={styles.imageContainer}> */}
+      {/* <View style={appStyles.imageContainer}> */}
       <ScrollView>
         <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
           {/* <Icon
@@ -175,18 +175,18 @@ export default function EditAlbum({ navigation, route }) {
             size={40}
             onPress={deleteAlbum}
           /> */}
-          <View style={styles.imageContainer}>
+          <View style={appStyles.imageContainer}>
             {pickedImagePath !== '' ?
               (
                 <TouchableOpacity onPress={handleImagePress}>
-                  <Image source={{ uri: pickedImagePath }} style={styles.image} />
+                  <Image source={{ uri: pickedImagePath }} style={appStyles.image} />
                 </TouchableOpacity>
               ) :
               (
                 <TouchableOpacity onPress={handleImagePress}>
                   <Image
                     source={require('../../assets/Default_Album_Artwork.png')}
-                    style={styles.image}
+                    style={appStyles.image}
                   />
                 </TouchableOpacity>
               )}
@@ -218,7 +218,7 @@ export default function EditAlbum({ navigation, route }) {
           <View style={[appStyles.inputContainer]}>
             <ButtonGroup
               buttons={[
-                "none", "Listened", "To Be Listened",
+                "Unclassified", "Listened", "To Be Listened",
               ]}
               onPress={ind => {
                 setListeningStatus(ind)
@@ -231,7 +231,7 @@ export default function EditAlbum({ navigation, route }) {
             <Text></Text>
             <ButtonGroup
               buttons={[
-                "none", "Owned", "Not Owned"
+                "Unclassified", "Owned", "Not Owned"
               ]}
               onPress={ind => {
                 setOwnershipStatus(ind)
@@ -243,14 +243,14 @@ export default function EditAlbum({ navigation, route }) {
             />
             <Text></Text>
             <Input
-              style={appStyles.input}
+              style={appStyles.inputEdit}
               placeholder="Enter album title"
               value={albumName}
               onChangeText={setAlbumName}
               label="Title"
             />
             <Input
-              style={appStyles.input}
+              style={appStyles.inputEdit}
               placeholder="Enter album artist"
               value={albumArtist}
               onChangeText={setAlbumArtist}
@@ -317,30 +317,30 @@ export default function EditAlbum({ navigation, route }) {
   );
 }
 
-const styles = StyleSheet.create({
-  imageContainer: {
-    padding: 30,
-    marginBottom: 15
-  },
-  image: {
-    width: 250,
-    height: 250,
-    resizeMode: 'cover',
-    borderWidth: 0.5
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  deleteButton: {
-    backgroundColor: 'red',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+// const appStyles = StyleSheet.create({
+//   imageContainer: {
+//     padding: 30,
+//     marginBottom: 15
+//   },
+//   image: {
+//     width: 250,
+//     height: 250,
+//     resizeMode: 'cover',
+//     borderWidth: 0.5
+//   },
+//   inputEdit: {
+//     height: 40,
+//     borderColor: 'gray',
+//     borderWidth: 1,
+//     marginBottom: 10,
+//     paddingHorizontal: 10,
+//   },
+//   deleteButton: {
+//     backgroundColor: 'red',
+//     width: 50,
+//     height: 50,
+//     borderRadius: 25,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+// });
