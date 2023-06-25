@@ -1,15 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Input, Text, Image, Icon } from '@rneui/base';
 import * as ImagePicker from 'expo-image-picker';
 import appStyles from '../appStyles';
 import { Ionicons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import UsersContext from '../components/UserProvider';
 
 export default function Settings({navigation}){
 
     const { state, dispatch } = useContext(UsersContext)
     const [pickedImagePath, setPickedImagePath] = useState('')
+
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        if (isFocused) {
+          setPickedImagePath(state.context[state.loggedInUser].profilePic)
+        }
+      }, [isFocused])
 
     const deleteUser = async () => {
 
@@ -93,7 +102,7 @@ export default function Settings({navigation}){
                     text: 'Yes',
                     onPress: () => {setPickedImagePath(''), dispatch({
                                     type: 'addUserPic',
-                                    payload: {user: state.loggedInUser, pic: result.assets[0].uri}})}
+                                    payload: {user: state.loggedInUser, pic: '../../assets/Default_User_Artwork.png'}})}
                 },
                 {
                     text: 'No',
@@ -114,7 +123,7 @@ export default function Settings({navigation}){
                         pickedImagePath ? 
                             <TouchableOpacity onPress = {handleImagePress}>
                             <Image 
-                                source = {{ uri: state.context[state.loggedInUser].profilePic }}
+                                source = {{ uri: pickedImagePath }}
                                 style = {styles.image}
                             />
                             </TouchableOpacity>  
