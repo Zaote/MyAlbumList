@@ -2,7 +2,6 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const UsersContext = createContext()
-const initialState = {context: {}}
 
 async function saveContext(context) {
     try {
@@ -133,11 +132,7 @@ const actions = {
         }
         saveContext(updatedContext)
         return {...state, context: updatedContext }
-    },
-    clearUsers: (state, action) => {
-        saveContext({})
-        return {...state, context: {}}
-    },  
+    }, 
 }
 
 export function UserProvider({ children }) {

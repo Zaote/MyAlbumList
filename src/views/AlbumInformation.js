@@ -1,15 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView, ScrollView } from 'react-native'
 import appStyles from '../appStyles'
 import { Text, Image, Icon, Card } from '@rneui/base'
-import UsersContext from '../components/UserProvider'
 import StarRating from 'react-native-star-rating-widget'
 
 export default function AlbumInformation({ navigation, route }) {
-  const { state, dispatch } = useContext(UsersContext)
   const [album, setAlbum] = useState(route.params.album)
   const [albumRating, setAlbumRating] = useState(0)
-  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     setAlbumRating(route.params.album.rating / 2)

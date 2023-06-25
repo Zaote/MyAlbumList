@@ -189,12 +189,6 @@ export default function Settings({navigation}){
                             buttonStyle={{ width: 200, height: 50 }}
                             containerStyle={{ margin: 5 }}
                         />
-                        <Button
-                            title="RESET"
-                            onPress={() => dispatch({type: 'clearUsers', payload: {}})}
-                            buttonStyle={{ width: 200, height: 50 }}
-                            containerStyle={{ margin: 5 }}
-                        />
                     </View>
                 </View>
             </ScrollView>
