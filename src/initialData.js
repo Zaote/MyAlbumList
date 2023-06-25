@@ -7,7 +7,7 @@ const initialData = {
         familyName: "Sumner",
         email: 'stingthepolice@coolmail.com',
         password: '$2a$10$Qi9sdVYBZdA./w51C8X7Y.6v7vn7ih87l256y/.hE2YcNnYNiBo3G',
-        profilePic: '../../assets/Default_User_Artwork.png',
+        profilePic: null,
         albumData: {
             albums: []
         }
@@ -19,7 +19,7 @@ const initialData = {
         familyName: "Padavona",
         email: 'ronniejamesdio@coolmail.com',
         password: '$2a$10$8lNu9MukNDP0V64CjUh5iuKH09KpHqN6g6o8bB6zcGEh6KwV.GxIK',
-        profilePic: '../../assets/Default_User_Artwork.png',
+        profilePic: null,
         albumData: {
             albums: [],
         }

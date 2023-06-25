@@ -10,7 +10,7 @@ import UsersContext from '../components/UserProvider';
 export default function Settings({navigation}){
 
     const { state, dispatch } = useContext(UsersContext)
-    const [pickedImagePath, setPickedImagePath] = useState('')
+    const [pickedImagePath, setPickedImagePath] = useState(null)
 
     const isFocused = useIsFocused()
 
@@ -52,6 +52,7 @@ export default function Settings({navigation}){
         const result = await ImagePicker.launchImageLibraryAsync()
         if (!result.canceled) {
             setPickedImagePath(result.assets[0].uri)
+            // console.log(result.assets[0].uri)
             dispatch({
                 type: 'addUserPic',
                 payload: {user: state.loggedInUser, pic: result.assets[0].uri}
@@ -102,7 +103,7 @@ export default function Settings({navigation}){
                     text: 'Yes',
                     onPress: () => {setPickedImagePath(''), dispatch({
                                     type: 'addUserPic',
-                                    payload: {user: state.loggedInUser, pic: '../../assets/Default_User_Artwork.png'}})}
+                                    payload: {user: state.loggedInUser, pic: null}})}
                 },
                 {
                     text: 'No',
@@ -146,9 +147,9 @@ export default function Settings({navigation}){
                         </View>
                     </View>
                     <Text style = {{ paddingBottom: 10, fontSize: 25 }}>{state.loggedInUser}</Text>                    
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Given Name: {state.context[state.loggedInUser].givenName}</Text>
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text>
-                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Email : {state.context[state.loggedInUser].email}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}> {state.context[state.loggedInUser].givenName} {state.context[state.loggedInUser].familyName}</Text>
+                    {/* <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text> */}
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>{state.context[state.loggedInUser].email}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"
