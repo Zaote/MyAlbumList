@@ -11,8 +11,6 @@ export default function Settings({navigation}){
     const { state, dispatch } = useContext(UsersContext)
     const [pickedImagePath, setPickedImagePath] = useState('')
 
-    // const username = state.loggedInUser
-
     const deleteUser = async () => {
 
         Alert.alert(
@@ -151,8 +149,10 @@ export default function Settings({navigation}){
                             />
                         </View>
                     </View>
-                    <Text>{state.loggedInUser}</Text>
-                    {/* <Text>{console.log(state.username)}</Text> */}
+                    <Text style = {{ paddingBottom: 10, fontSize: 25 }}>{state.loggedInUser}</Text>                    
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Given Name: {state.context[state.loggedInUser].givenName}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Family Name: {state.context[state.loggedInUser].familyName}</Text>
+                    <Text style = {{ paddingTop: 5, fontSize: 18 }}>Email : {state.context[state.loggedInUser].email}</Text>
                     <View style={{justifyContent:"center", alignItems:"center", paddingTop: 30}}>
                         <Ionicons
                             color="red"
