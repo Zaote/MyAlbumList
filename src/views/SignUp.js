@@ -1,20 +1,20 @@
-import React, { useState, useContext } from 'react';
-import { View, SafeAreaView } from 'react-native';
-import appStyles from '../appStyles';
-import { Text, Input, Button } from '@rneui/base';
-import UsersContext from '../components/UserProvider';
+import React, { useState, useContext } from 'react'
+import { View, SafeAreaView } from 'react-native'
+import appStyles from '../appStyles'
+import { Text, Input, Button } from '@rneui/base'
+import UsersContext from '../components/UserProvider'
 
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcryptjs')
 
 bcrypt.setRandomFallback((len) => {
-    const buf = new Uint8Array(len);
-    return buf.map(() => Math.floor(Math.random() * 256));
-});
+    const buf = new Uint8Array(len)
+    return buf.map(() => Math.floor(Math.random() * 256))
+})
 
 var salt = bcrypt.genSaltSync(10)
 
 function startsWithLetter(strg){
-    const charCode = strg.charCodeAt(0);
+    const charCode = strg.charCodeAt(0)
     upper = charCode >= 65 && charCode <= 90
     lower = charCode >= 97 && charCode <= 122
     return upper || lower
@@ -22,7 +22,7 @@ function startsWithLetter(strg){
 
 
 export default function SignUp({navigation}){
-    const { state, dispatch } = useContext(UsersContext);
+    const { state, dispatch } = useContext(UsersContext)
 
     const [givenName, setGivenName] = useState("")
     const [flagGivenName, setFlagGivenName] = useState(false)

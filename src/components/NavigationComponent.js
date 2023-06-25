@@ -1,20 +1,20 @@
-import React from 'react';
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Login from '../views/Login';
-import SignUp from '../views/SignUp';
-import AllAlbums from '../views/Lists/AllAlbums';
-import ListenedAlbums from '../views/Lists/ListenedAlbums';
-import ToBeListenedAlbums from '../views/Lists/ToBeListenedAlbums';
-import RegisterAlbum from '../views/RegisterAlbum';
-import Settings from '../views/Settings';
-import AlbumInformation from '../views/AlbumInformation';
-import OwnedAlbums from '../views/Lists/OwnedAlbums';
-import NotOwnedAlbums from '../views/Lists/NotOwnedAlbums';
-import EditAlbum from '../views/EditAlbum';
-import { AntDesign } from '@expo/vector-icons';
+import React from 'react'
+import { NavigationContainer } from "@react-navigation/native"
+import { createDrawerNavigator } from "@react-navigation/drawer"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import Login from '../views/Login'
+import SignUp from '../views/SignUp'
+import AllAlbums from '../views/Lists/AllAlbums'
+import ListenedAlbums from '../views/Lists/ListenedAlbums'
+import ToBeListenedAlbums from '../views/Lists/ToBeListenedAlbums'
+import RegisterAlbum from '../views/RegisterAlbum'
+import Settings from '../views/Settings'
+import AlbumInformation from '../views/AlbumInformation'
+import OwnedAlbums from '../views/Lists/OwnedAlbums'
+import NotOwnedAlbums from '../views/Lists/NotOwnedAlbums'
+import EditAlbum from '../views/EditAlbum'
+import { AntDesign } from '@expo/vector-icons'
 
 const MainStack = createNativeStackNavigator()
 const HomeTabs = createBottomTabNavigator()

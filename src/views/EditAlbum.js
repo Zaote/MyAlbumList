@@ -1,16 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
-import { Button, Input, Text, Icon, Image, FAB, ButtonGroup } from '@rneui/base';
-import appStyles from '../appStyles';
-import UsersContext from '../components/UserProvider';
+import React, { useState, useContext, useEffect } from 'react'
+import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native'
+import { Button, Input, Text, Icon, Image, FAB, ButtonGroup } from '@rneui/base'
+import appStyles from '../appStyles'
+import UsersContext from '../components/UserProvider'
 import * as ImagePicker from 'expo-image-picker'
-import StarRating from 'react-native-star-rating-widget';
+import StarRating from 'react-native-star-rating-widget'
 
 export default function EditAlbum({ navigation, route }) {
-  const { state, dispatch } = useContext(UsersContext);
-  const { album } = route.params;
-  const [albumName, setAlbumName] = useState(album.name);
-  const [albumArtist, setAlbumArtist] = useState(album.artist);
+  const { state, dispatch } = useContext(UsersContext)
+  const { album } = route.params
+  const [albumName, setAlbumName] = useState(album.name)
+  const [albumArtist, setAlbumArtist] = useState(album.artist)
   const [pickedImagePath, setPickedImagePath] = useState('')
   const [listeningStatus, setListeningStatus] = useState(0)
   const [ownershipStatus, setOwnershipStatus] = useState(0)
@@ -38,8 +38,8 @@ export default function EditAlbum({ navigation, route }) {
             size={30}
         />
       ),
-    });
-  }, [navigation]);
+    })
+  }, [navigation])
 
   const saveAlbum = () => {
     const updatedAlbum = {
@@ -52,11 +52,11 @@ export default function EditAlbum({ navigation, route }) {
       ownershipStatus: ownershipStatus,
       review: albumReview,
       tracks: trackInputs,
-    };
+    }
     dispatch({
       type: 'updateAlbum',
       payload: { album: updatedAlbum, user: state.loggedInUser },
-    });
+    })
     route.params.fromAlbumInfo ? 
       navigation.navigate('Album Information', {album: updatedAlbum})
     : 
@@ -65,15 +65,15 @@ export default function EditAlbum({ navigation, route }) {
   }
 
   function deleteTrackInput(index){
-    const updatedInputs = [...trackInputs];
-    updatedInputs.splice(index, 1);
-    setTrackInputs(updatedInputs);
+    const updatedInputs = [...trackInputs]
+    updatedInputs.splice(index, 1)
+    setTrackInputs(updatedInputs)
 }
 
   function handleTrackInputs(text, index){
-      const updatedInputs = [...trackInputs];
-      updatedInputs[index] = text;
-      setTrackInputs(updatedInputs);
+      const updatedInputs = [...trackInputs]
+      updatedInputs[index] = text
+      setTrackInputs(updatedInputs)
   }
 
   const showImagePicker = async () => {
@@ -290,5 +290,5 @@ export default function EditAlbum({ navigation, route }) {
           
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }

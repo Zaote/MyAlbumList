@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native';
-import { Button, Input, Text, Image, Icon, ButtonGroup, FAB } from '@rneui/base';
-import * as ImagePicker from 'expo-image-picker';
-import appStyles from '../appStyles';
-import UsersContext from '../components/UserProvider';
-import StarRating from 'react-native-star-rating-widget';
+import React, { useState, useContext } from 'react'
+import { View, TouchableOpacity, Alert, SafeAreaView, ScrollView } from 'react-native'
+import { Button, Input, Text, Image, Icon, ButtonGroup, FAB } from '@rneui/base'
+import * as ImagePicker from 'expo-image-picker'
+import appStyles from '../appStyles'
+import UsersContext from '../components/UserProvider'
+import StarRating from 'react-native-star-rating-widget'
 
 export default function RegisterAlbum({navigation}){
-    const { state, dispatch } = useContext(UsersContext);
+    const { state, dispatch } = useContext(UsersContext)
     const [pickedImagePath, setPickedImagePath] = useState('')
     const [albumName, setAlbumName] = useState('')
     const [albumArtist, setAlbumArtist] = useState('')
@@ -15,18 +15,18 @@ export default function RegisterAlbum({navigation}){
     const [listeningStatus, setListeningStatus] = useState(0)
     const [ownershipStatus, setOwnershipStatus] = useState(0)
     const [review, setReview] = useState('')
-    const [trackInputs, setTrackInputs] = useState([""]);
+    const [trackInputs, setTrackInputs] = useState([""])
 
     function deleteTrackInput(index){
-        const updatedInputs = [...trackInputs];
-        updatedInputs.splice(index, 1);
-        setTrackInputs(updatedInputs);
+        const updatedInputs = [...trackInputs]
+        updatedInputs.splice(index, 1)
+        setTrackInputs(updatedInputs)
     }
 
     function handleTrackInputs(text, index){
-        const updatedInputs = [...trackInputs];
-        updatedInputs[index] = text;
-        setTrackInputs(updatedInputs);
+        const updatedInputs = [...trackInputs]
+        updatedInputs[index] = text
+        setTrackInputs(updatedInputs)
     }
 
     const saveAlbum = async () => {
@@ -101,8 +101,8 @@ export default function RegisterAlbum({navigation}){
             },
           ],
           { cancelable: true }
-        );
-      };
+        )
+      }
 
     const deletePic = () => {
         Alert.alert(

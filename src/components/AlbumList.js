@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, FlatList, Image, BackHandler, SafeAreaView } from 'react-native';
-import { ListItem, Button, Icon, SearchBar, Text } from '@rneui/base';
-import appStyles from '../appStyles';
-import { useIsFocused, useFocusEffect } from '@react-navigation/native';
-import UsersContext from './UserProvider';
+import React, { useState, useEffect } from 'react'
+import { View, FlatList, Image, BackHandler, SafeAreaView } from 'react-native'
+import { ListItem, Button, Icon, SearchBar, Text } from '@rneui/base'
+import appStyles from '../appStyles'
+import { useIsFocused, useFocusEffect } from '@react-navigation/native'
 
 export default function AlbumList({navigation, albumsToShow}) {
 
-    const { state, dispatch } = useContext(UsersContext)
     const [searchValue, setSearchValue] = useState("")
     const [shownAlbums, setShownAlbums] = useState([])
-    
-    //É usado isFocused, onde ele só atualiza quando o usuario mudar pra página AllAlbums, achei essa melhor até o momento
 
     const isFocused = useIsFocused()
 
@@ -77,7 +73,7 @@ export default function AlbumList({navigation, albumsToShow}) {
           />
         </View>
       </ListItem>
-    );
+    )
 
     return (
         <SafeAreaView style={{paddingBottom: 60}}>
@@ -90,7 +86,6 @@ export default function AlbumList({navigation, albumsToShow}) {
               inputContainerStyle={{backgroundColor: '#EEEEEE'}}
             />
             <FlatList
-                // data = {shownAlbums.sort(() => it )}
                 data = {shownAlbums.sort((X, Y) => X.name.localeCompare(Y.name))}
                 renderItem = {renderItem}
                 keyExtractor = {(item, index) => `${item.name}_${index}`}
@@ -98,31 +93,3 @@ export default function AlbumList({navigation, albumsToShow}) {
         </SafeAreaView>
     )
 }
-
-// const appStyles = StyleSheet.create({
-//   albumItem: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginBottom: 1,
-//   },
-//   albumCoverContainer: {
-//     width: 110,
-//     height: 110,
-//     marginRight: 10,
-//     borderWidth: 0.5
-//   },
-//   albumCover: {
-//     flex: 1,
-//     width: '100%',
-//     height: '100%',
-//     resizeMode: 'cover',
-//   },
-//   albumTextContainer: {
-//     flex: 1,
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//   },
-//   albumName: {
-//     fontSize: 21,
-//   },
-// });

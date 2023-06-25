@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, Text, Image, Icon, Avatar } from '@rneui/base';
-import * as ImagePicker from 'expo-image-picker';
-import appStyles from '../appStyles';
-import { Ionicons } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
-import UsersContext from '../components/UserProvider';
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Alert, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
+import { Button, Text, Image, Icon, Avatar } from '@rneui/base'
+import * as ImagePicker from 'expo-image-picker'
+import appStyles from '../appStyles'
+import { Ionicons } from '@expo/vector-icons'
+import { useIsFocused } from '@react-navigation/native'
+import UsersContext from '../components/UserProvider'
 
 export default function Settings({navigation}){
 
@@ -16,9 +16,9 @@ export default function Settings({navigation}){
 
     useEffect(() => {
     if (isFocused && state.loggedInUser && state.context[state.loggedInUser]) {
-        setPickedImagePath(state.context[state.loggedInUser].profilePic);
+        setPickedImagePath(state.context[state.loggedInUser].profilePic)
     }
-    }, [isFocused, state.loggedInUser, state.context]);
+    }, [isFocused, state.loggedInUser, state.context])
 
     async function deleteUser(){
 
@@ -111,8 +111,8 @@ export default function Settings({navigation}){
             },
           ],
           { cancelable: true }
-        );
-      };
+        )
+      }
 
     function deletePic(){
         Alert.alert(

@@ -26,4 +26,4 @@ const initialData = {
     }
 } 
 
-export default initialData;
+export default initialData
