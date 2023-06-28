@@ -4,7 +4,7 @@ import AlbumList from "../../components/AlbumList"
 
 export default function AllAlbums({navigation}){
   const { state, dispatch } = useContext(UsersContext)
-  const allAlbums = state.loggedInUser && state.context[state.loggedInUser]
+  const albumList = state.loggedInUser && state.context[state.loggedInUser]
                     ? 
                       state.context[state.loggedInUser].albumData.albums 
                     : 
@@ -12,7 +12,7 @@ export default function AllAlbums({navigation}){
   return(
     <AlbumList
       navigation={navigation}
-      albumsToShow={allAlbums}
+      albumsToShow={albumList}
     />
   )
 }

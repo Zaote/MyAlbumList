@@ -16,13 +16,13 @@ export default function Login({ navigation }) {
   const { state, dispatch } = useContext(UsersContext)
   const [username, setUsername] = useState(null)
   const [password, setPassword] = useState(null)
-  const [msg, setMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
 
   async function handleLogin(username, password) {
     const usr = username.trim()
     const pass = password.trim()
     if (!(usr in state.context)) {
-      setMsg(`The user ${usr} does not exist!`)
+      setErrorMsg(`The user ${usr} does not exist!`)
     } else {
       const isCorrectPassword = bcrypt.compareSync(
         pass,
@@ -33,10 +33,10 @@ export default function Login({ navigation }) {
         dispatch({ type: 'loginUser', payload: loggedInUser })
         setUsername("")
         setPassword("")
-        setMsg("")
+        setErrorMsg("")
         navigation.navigate('Home')
       } else {
-        setMsg('The password is invalid!')
+        setErrorMsg('The password is invalid!')
       }
     }
   }
@@ -70,7 +70,7 @@ export default function Login({ navigation }) {
       <TouchableOpacity onPress={() => navigation.push('Sign Up')}>
         <Text style={appStyles.link}>Sign Up</Text>
       </TouchableOpacity>
-      <Text>{msg}</Text>
+      <Text style={{color: 'red'}}>{errorMsg}</Text>
     </SafeAreaView>
   )
 }

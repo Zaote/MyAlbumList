@@ -4,7 +4,7 @@
     "slug": "MyAlbumList",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/appIcon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.zaote.MyAlbumList"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "84c819cd-9e16-4019-bfc0-724f563867dd"
+      }
     }
   }
 }

@@ -4,12 +4,17 @@ import AlbumList from "../../components/AlbumList"
 
 export default function ToBeListenedAlbums({navigation}){
   const { state, dispatch } = useContext(UsersContext)
+  const albumList = state.loggedInUser && state.context[state.loggedInUser]
+                    ? 
+                      state.context[state.loggedInUser].albumData.albums.filter(
+                        al => al.listeningStatus === 2
+                      ) 
+                    : 
+                      []
   return(
     <AlbumList
       navigation={navigation}
-      albumsToShow={state.context[state.loggedInUser].albumData.albums.filter(
-        al => al.listeningStatus === 2
-      )}
+      albumsToShow={albumList}
     />
   )
 }

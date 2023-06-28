@@ -58,6 +58,8 @@ export default function RegisterAlbum({navigation}){
         setAlbumRating(0)
         setReview('')
         setTrackInputs([''])
+        setListeningStatus(0)
+        setOwnershipStatus(0)
     }
 
     const showImagePicker = async () => {
@@ -174,9 +176,9 @@ export default function RegisterAlbum({navigation}){
                         "Unclassified", "Listened", "To Be Listened",
                     ]}
                     onPress={ind => {
-                        setOwnershipStatus(ind)
+                        setListeningStatus(ind)
                     }}
-                    selectedIndex={ownershipStatus}
+                    selectedIndex={listeningStatus}
                     containerStyle={{ height: 50 }}
                     bottomStyle={{ height: 50 }}
                     label="D"
@@ -187,9 +189,9 @@ export default function RegisterAlbum({navigation}){
                         "Unclassified", "Owned", "Not Owned"
                     ]}
                     onPress={ind => {
-                        setListeningStatus(ind)
+                        setOwnershipStatus(ind)
                     }}
-                    selectedIndex={listeningStatus}
+                    selectedIndex={ownershipStatus}
                     containerStyle={{ height: 50 }}
                     bottomStyle={{ height: 50 }}
                     label="D"
