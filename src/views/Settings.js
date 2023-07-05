@@ -9,7 +9,7 @@ import UsersContext from '../components/UserProvider'
 
 export default function Settings({navigation}){
 
-    const { state, dispatch } = useContext(UsersContext)
+    const { state, dispatch, registerToken } = useContext(UsersContext)
     const [pickedImagePath, setPickedImagePath] = useState(null)
 
     const isFocused = useIsFocused()
@@ -29,6 +29,7 @@ export default function Settings({navigation}){
               {
                 text: 'Yes',
                 onPress: () => {
+                    registerToken("%none%")
                     dispatch({type: 'deleteUser', payload: {user: state.loggedInUser}})
                     navigation.navigate("Login")
                 }
@@ -175,7 +176,10 @@ export default function Settings({navigation}){
                             color="red"
                             name="log-out"
                             size={40}
-                            onPress={() => {navigation.navigate("Login")}}
+                            onPress={() => {
+                                registerToken("%none%")
+                                navigation.navigate("Login")
+                            }}
                         />
                         <Button
                             title="Delete User"

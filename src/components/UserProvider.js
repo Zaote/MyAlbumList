@@ -24,10 +24,10 @@ async function loadContext() {
 async function loadCurUser() {
     try {
         const lastUser = await AsyncStorage.getItem('token')
-        return lastUser ? lastUser : null
+        return lastUser ? lastUser : '%none%'
     } catch (error) {
         console.error('An error has occurred while loading the token from AsyncStorage', error)
-        return null
+        return '%none%'
     }
 }
 
@@ -142,13 +142,24 @@ const actions = {
         }
         saveContext(updatedContext)
         return {...state, context: updatedContext }
-    }, 
+    },
+    clearUsers: (state, action) => {
+        saveContext({});
+        return {...state, context: {}}
+    },
 }
 
 export function UserProvider({ children }) {
     function reducer(state, action) {
         const fn = actions[action.type]
         return fn ? fn(state, action) : state
+    }
+
+    const [state, dispatch] = useReducer(reducer, {context: {}})
+    const [curUser, setCurUser] = useState('%none%')
+
+    function getCurUser(){
+        return curUser;
     }
     
     useEffect(() => {
@@ -161,16 +172,13 @@ export function UserProvider({ children }) {
                 dispatch({ type: 'loadContext', payload: {context: {}} })
                 saveContext({context: {}})
             }
-
+            
             const loadedCurUser = await loadCurUser()
             setCurUser(loadedCurUser)
         }
 
         fetchData()
     }, [])
-
-    const [state, dispatch] = useReducer(reducer, {context: {}})
-    const [curUser, setCurUser] = useState(null)
 
     async function registerToken(usr) {
         setCurUser(usr)
@@ -183,7 +191,7 @@ export function UserProvider({ children }) {
     
 
     return (
-        <UsersContext.Provider value={{state, dispatch, curUser, registerToken}}>
+        <UsersContext.Provider value={{state, dispatch, getCurUser, registerToken}}>
             {children}
         </UsersContext.Provider>
     )

@@ -15,7 +15,7 @@ bcrypt.setRandomFallback((len) => {
 
 
 export default function Login({ navigation }) {
-  const { state, dispatch, curUser, registerToken } = useContext(UsersContext)
+  const { state, dispatch, registerToken, getCurUser } = useContext(UsersContext)
   const [username, setUsername] = useState(null)
   const [password, setPassword] = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
@@ -24,12 +24,13 @@ export default function Login({ navigation }) {
 
   useEffect(() => {
     if(isFocused){
-      if(curUser){
+      const curUser = getCurUser()
+      if(curUser && curUser !== '%none%'){
         dispatch({ type: 'loginUser', payload: curUser })
         navigation.navigate('Home')
       }
     }
-  }, [isFocused])
+  }, [isFocused, getCurUser])
 
   async function handleLogin(username, password) {
     const usr = username.trim()
@@ -47,6 +48,7 @@ export default function Login({ navigation }) {
         setUsername("")
         setPassword("")
         setErrorMsg("")
+        const curUser = getCurUser()
         if(curUser != loggedInUser){
           registerToken(loggedInUser)
         }
