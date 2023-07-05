@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react'
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const UsersContext = createContext()
@@ -18,6 +18,16 @@ async function loadContext() {
     } catch (error) {
         console.error('An error has occurred while loading the users from AsyncStorage', error)
         return { context: [] }
+    }
+}
+
+async function loadCurUser() {
+    try {
+        const lastUser = await AsyncStorage.getItem('token')
+        return lastUser ? lastUser : null
+    } catch (error) {
+        console.error('An error has occurred while loading the token from AsyncStorage', error)
+        return null
     }
 }
 
@@ -151,16 +161,29 @@ export function UserProvider({ children }) {
                 dispatch({ type: 'loadContext', payload: {context: {}} })
                 saveContext({context: {}})
             }
+
+            const loadedCurUser = await loadCurUser()
+            setCurUser(loadedCurUser)
         }
 
         fetchData()
     }, [])
 
     const [state, dispatch] = useReducer(reducer, {context: {}})
+    const [curUser, setCurUser] = useState(null)
+
+    async function registerToken(usr) {
+        setCurUser(usr)
+        try {
+            await AsyncStorage.setItem("token", usr)
+        } catch (error) {
+            console.error('An error has occurred while registering the token with AsyncStorage', error)
+        }   
+    } 
     
 
     return (
-        <UsersContext.Provider value={{state, dispatch }}>
+        <UsersContext.Provider value={{state, dispatch, curUser, registerToken}}>
             {children}
         </UsersContext.Provider>
     )
